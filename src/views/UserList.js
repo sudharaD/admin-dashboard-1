@@ -46,7 +46,7 @@ const UserList = () => {
   return (
     <Container fluid>
       {/* new users */}
-      <ModalComponent setUser={setUser} open={open} setOpen={setOpen} name="Add New User">
+      <ModalComponent setUser={setUser} open={open} setOpen={setOpen} name="Add New Screen">
         <CreateAndUpdateSection user={user} setOpen={setOpen} setUsers={setUsers} />
       </ModalComponent>
 
