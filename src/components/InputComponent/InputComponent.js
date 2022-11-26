@@ -13,7 +13,8 @@ import {
   } from "react-bootstrap";
 const InputComponent = (props) => {
 
-    const {md = 12,label, value, setValue, type = "text"} = props
+  const {md = 12,label, value, setValue, type = "text"} = props
+  
   return (
     <>
     <Col className="pr-1" md={md}>

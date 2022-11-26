@@ -25,7 +25,7 @@ function User() {
     const params = useParams()
     const router = useHistory()
 
-    const [vehicleName, setVehicleName] = useState("")
+    const [title, setTitle] = useState("")
     const [year, setyear] = useState("")
     const [image, setimage] = useState("default")
     const [price, setprice] = useState("")
@@ -89,98 +89,9 @@ function User() {
     
 
   return (
-      <Fragment>
+    <Fragment>
       <Container fluid>
-        <Row>
-          <Col md="12">
-            <Card>
-              <Card.Header>
-                <Card.Title as="h4">{`User - ${firstName} ${lastName}`} </Card.Title>
-                <Row>
-                <div style={{textAlign:'end', width:'100%'}}>
-                    <Button
-                    onClick={sendEmail}
-                    className="btn-fill pull-right"
-                    style={{margin:'1rem'}}
-                    variant="info"
-                  >
-                    Send Email
-                  </Button>
-                 
-                    <Button
-                    onClick={deleteUser}
-                    className="btn-warning pull-right"
-                    style={{margin:'1rem'}}
-                    variant="info"
-                  >
-                    Delete User
-                  </Button>
-                  </div>
-                  </Row>
-
-              </Card.Header>
-
-              <hr />
-              <Card.Body>
-              <div className="author" style={{textAlign:'center'}} >
-                    <img
-                      alt="..."
-                      className="avatar border-gray"
-                      src={logo}
-                      style={{height:'100px', width:'100px'}}
-                    />
-                </div>
-                <Form>
-                 <Fragment> 
-                  <Row>
-                    <InputComponent md="6" label="First Name" value={firstName} setValue={setfirstName}  />
-                    <InputComponent md="6" label="Last Name" value={lastName} setValue={setlastName}  />
-                   
-                    
-                  </Row>
-                  <InputComponent  label="Email" value={email} setValue={setemail}  />
-                  
-
-                  </Fragment>
-
-                  <div style={{textAlign:'center', marginTop:'70px'}} />
-
-
-                 
-                  
-
-                  
-                  <div className="clearfix"></div>
-                </Form>
-
-
-
-                <Table className="table-hover table-striped">
-                  <thead>
-                    <tr>
-                      <th className="border-0">ID</th>
-                      <th className="border-0">Vehicle Name</th>
-                      <th className="border-0">Price</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    { list.map((l, i)=> <tr key={l._id}>
-                      <td>{i + 1}</td>
-                      <td> {l.carName} </td>
-                      <td> Rs - {l.price}</td>
-                    </tr> ) }
-
-                    
-                  </tbody>
-                </Table>
-
-
-
-              </Card.Body>
-            </Card>
-          </Col>
-          
-        </Row>
+        <InputComponent label="Title" value={title} setValue={setTitle} />
       </Container>
     </Fragment>
   );
