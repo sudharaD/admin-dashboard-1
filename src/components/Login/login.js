@@ -10,6 +10,8 @@ const LoginComponent = () => {
   const router = useHistory()
 
   const login = async()=>{
+    router.push('/admin/user')
+    return;
 
     // add default login
     localStorage.setItem("car-admin-user", "default_login")
@@ -27,18 +29,18 @@ const LoginComponent = () => {
   }
   return (
     <div className='bgC'>
-            <div style={{height:'200px'}}></div>
+    <div style={{height:'200px'}}></div>
 
     <div className="box-form" >
-       <div className="left">
+    <div className="left">
 		<div className="overlay">
-		<h1>Car Admin Portal</h1>
+		<h1>Travel Admin App</h1>
 		
 		
 		</div>
         </div>
         <div className='right'>
-		<p>Car Management System. System for change the future in the car management Sri Lanka</p>
+		<p>Travel App System. System for change the future in the travel management Sri Lanka</p>
 		
         <div className="inputs">
 			<input type="text" placeholder="user name" value={email} onChange={(e)=>setemail(e.target.value)} />

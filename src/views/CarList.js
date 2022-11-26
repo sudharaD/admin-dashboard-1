@@ -22,10 +22,10 @@ const UserList = () => {
 
     const getUsers = async ()=>{
       //set defult cars
-      setCars(defaultCars)
+      // setCars(defaultCars)
       const reauest = await httpRequest({ url : 'home/cars', method :'get'})
       if(reauest.success){
-        setCars(reauest.data)
+        // setCars(reauest.data)
       }
     }
   

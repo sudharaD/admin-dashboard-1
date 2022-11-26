@@ -36,11 +36,11 @@ const UserList = () => {
 
     const getUsers = async ()=>{
       // default get users
-      setUsers(defaultUsers)
+      // setUsers(defaultUsers)
       return;
       const reauest = await httpRequest({ url : 'users/find-users', method :'get'})
       if(reauest.success){
-        setUsers(reauest.users)
+        // setUsers(reauest.users)
       }
     }
   

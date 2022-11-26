@@ -29,6 +29,8 @@ function FavouriteCars() {
   useEffect(() => {
     getUsers()
   }, [])
+
+  return <div></div>
   return (
     <>
       <Container fluid>

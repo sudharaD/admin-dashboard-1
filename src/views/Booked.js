@@ -36,6 +36,8 @@ function TableList() {
     router.push(`/admin/name/${id}`)
   }
 
+  return <div></div>
+
   return (
     <>
       <Container fluid>

@@ -27,9 +27,10 @@ function Admin() {
   const router = useHistory()
 
   useEffect(()=>{
-    if(!user){
-      router.replace('/login')
-    }
+    // need auth
+    // if(!user){
+    //   router.replace('/login')
+    // }
   }, [user])
 
 
