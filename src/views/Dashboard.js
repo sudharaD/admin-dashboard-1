@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ChartistGraph from "react-chartist";
 import { httpRequest } from "http/Http";
 // react-bootstrap components
 import {
@@ -140,13 +139,7 @@ function Dashboard() {
                   className="ct-chart ct-perfect-fourth"
                   id="chartPreferences"
                 >
-                  <ChartistGraph
-                    data={{
-                      labels: details.map(d=> `${d.brand}`),
-                      series: details.map(d=> `${d.prec}`),
-                    }}
-                    type="Pie"
-                  />
+                  
                 </div>
 
                 <div style={{height:'100px'}}></div>
