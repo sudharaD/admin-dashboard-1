@@ -10,7 +10,7 @@ const LoginComponent = () => {
   const router = useHistory()
 
   const login = async()=>{
-    router.push('/admin/user')
+    router.push('/admin/main')
     return;
 
     // add default login

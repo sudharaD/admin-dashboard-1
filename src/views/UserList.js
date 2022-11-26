@@ -1,38 +1,27 @@
 import { httpRequest } from 'http/Http';
 import React, { useEffect, useState } from 'react'
-import logo from '../assets/img/faces/face-3.jpg'
-import logo1 from '../assets/img/logo1.jpeg'
-import logo2 from '../assets/img/logo2.jpeg'
-import logo3 from '../assets/img/logo3.jpeg'
 
 import {
-    Badge,
     Button,
-    Card,
-    Form,
-    Navbar, 
-    Nav,
     Container,
-    Row,
-    Col,
   } from "react-bootstrap";
 
 import {useHistory} from 'react-router'
+import InputComponent from 'components/InputComponent/InputComponent';
+import SpaceBoxComponent from 'components/SpaceBox/SpaceBox';
+import ModalComponent from 'components/modal/Modal';
+import CardComponent from 'components/card/CardComponent';
 
-const defaultUsers = [
-  {_id:1, firstName:'Peter', secondName:'Miller', email:'peter@miller.com', logo},
-  {_id:2, firstName:'James', secondName:'Andi', email:'james@andi.com', logo:logo1},
-  {_id:3, firstName:'Paul', secondName:'Walker', email:'paul@waler.com', logo:logo2},
-  {_id:4, firstName:'Steve', secondName:'Smith', email:'steve@smith.com', logo:logo3},
-]
 const UserList = () => {
-    const [users, setUsers] = useState([])
-    const router = useHistory()
     
+    const router = useHistory()
+    const [users, setUsers] = useState([])
+    const [user, setUser] = useState(null)
+    const [open, setOpen] = useState(false);
+    const [userId, setUserId] = useState(null);
 
-    const userHandler = (id)=>{
-        router.push('/admin/name/' + id)
-    }
+    console.log(users);
+
 
     const getUsers = async ()=>{
       // default get users
@@ -43,6 +32,11 @@ const UserList = () => {
         // setUsers(reauest.users)
       }
     }
+
+    const identifyUser = (index)=>{
+      const specificUser = users.find((user)=> user.id === index)
+      setUser(specificUser)
+    }
   
     useEffect(() => {
       getUsers()
@@ -50,47 +44,99 @@ const UserList = () => {
 
 
   return (
-        <Container fluid>
-          <div style={{
-            display:'flex',
-            justifyContent:'center',
-            alignItems:'center',
-            flexWrap:'wrap'
-          }}>
-            <div style={{width:'700px'}}>
-            {users.map((user)=>  <Col style={{cursor:'pointer'}} key={user._id} md="12">
-            <Card className="card-user">
-              <div className="card-image">
-               
-              </div>
-              <Card.Body>
-                <div className="author">
-                    <img
-                      alt="..."
-                      className="avatar border-gray"
-                      src={user.logo}
-                    ></img>
-                    <h5 className="title"> {`${user.firstName} ${user.secondName}`} </h5>
-                </div>
-                <p className="description text-center">
-                  {user.email}
-                </p>
-              </Card.Body>
-              <hr></hr>
-              
-            </Card>
-          </Col>  )}
-            </div>
+    <Container fluid>
+      {/* new users */}
+      <ModalComponent setUser={setUser} open={open} setOpen={setOpen} name="Add New User">
+        <CreateAndUpdateSection user={user} setOpen={setOpen} setUsers={setUsers} />
+      </ModalComponent>
 
-          </div>
-
-            
-    
-        
-
+      {/* list of users */}
+      <ListSection users={users} setOpen={setOpen} identifyUser={identifyUser} />
     </Container>
 
   )
+}
+
+const CreateAndUpdateSection = (props)=>{
+  const {setUsers, setOpen, user} = props
+
+    const [title, setTitle] = useState("")
+    const [description, setDescription] = useState("")
+    const [province, setProvice] = useState("")
+    const [city, setCity] = useState("")
+    const [district, setDistrict] = useState("")
+    const [nearestTown, setNearestTown] = useState("")
+    const [location, setLocation] = useState("")
+
+    useEffect(()=>{
+      if(user){
+        const { title, description} = user
+        setTitle(title)
+        setDescription(description)
+      }
+    }, [])
+
+    const addOrUpdateUser = ()=>{
+
+      if(user){  
+        setUsers(users =>{
+          const filteredUsers = users.filter(curUser=> curUser.id !== user.id)
+          console.log(filteredUsers, 'filteredUsers');
+          const editableUser = {...user, title, description}
+          const returnArr = [...filteredUsers, editableUser]
+
+          return returnArr.sort((a, b)=> a.id - b.id )
+        })
+      }else{
+        setUsers(users=> [...users, { id : (users.length + 1),  title, description}])
+      }
+
+      setOpen(false)
+    }
+
+    const deleteUser = ()=>{
+      if(user){
+        setUsers(users =>{
+          const filteredUsers = users.filter(curUser=> curUser.id !== user.id)
+          return filteredUsers.sort((a, b)=> a.id - b.id )
+        })
+     }
+     setOpen(false)
+
+    }
+
+    return (
+      <div>
+        <InputComponent label="Title" value={title} setValue={setTitle} />
+        <InputComponent label="Description" value={description} setValue={setDescription} />
+        <InputComponent label="Province" value={province} setValue={setProvice} />
+        <InputComponent label="District" value={province} setValue={setProvice} />
+        <InputComponent label="City" value={province} setValue={setProvice} />
+        <InputComponent label="Nearest Town" value={province} setValue={setProvice} />
+        <SpaceBoxComponent>
+          { user && <Button color="secondary" onClick={deleteUser}> Delete User </Button>}
+          <Button onClick={addOrUpdateUser}> { user ? 'Update Data' : 'Insert Data'} </Button>
+        </SpaceBoxComponent>
+      </div>
+    )
+}
+
+const ListSection = (props)=>{
+  const { users, setOpen, identifyUser } = props
+
+    useEffect(()=>{}, [])
+
+    const editHandler = (index)=>{
+      identifyUser(index)
+      setOpen(true)
+    }
+
+    return (
+      <div style={{display:'flex', width:'100%', justifyContent:'flex-start', gap:'1rem', flexWrap:'wrap'}}>
+        { users.map((user, index)=> <CardComponent editHandler={editHandler} key={user.id} {...user} />
+         ) }
+      </div>
+    )
 }
 
 export default UserList
