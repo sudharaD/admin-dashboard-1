@@ -10,7 +10,7 @@ export default function CardComponent(props) {
   const {title, description, id, editHandler} = props
 
   return (
-    <Card onClick={()=>editHandler(id)}  sx={{ display: 'flex' ,  width: '350px', maxHeight: '7rem' , cursor:'pointer'}}>
+    <Card onClick={()=>editHandler(id)}  sx={{ display: 'flex' ,  width: '350px', height: '11rem' , cursor:'pointer'}}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5">
