@@ -69,11 +69,13 @@ const CreateAndUpdateSection = (props)=>{
     const [nearestTown, setNearestTown] = useState("")
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
+    const [latitude, setLatitude] = useState("")
+    const [longitude, setLongitude] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(()=>{
       if(equipment){
-        const { equipmentName, description, city, province, nearestTown, email, phoneNumber , district, address } = equipment
+        const { equipmentName, description, city, province, nearestTown, email, phoneNumber , district, address, latitude, longitude } = equipment
         setEquipmentName(equipmentName)
         setDescription(description)
         setAddress(address)
@@ -83,12 +85,14 @@ const CreateAndUpdateSection = (props)=>{
         setNearestTown(nearestTown)
         setEmail(email)
         setPhoneNumber(phoneNumber)
+        setLatitude(latitude)
+        setLongitude(longitude)
       }
     }, [])
 
     const addOrUpdateEquipmentShop = async()=>{
       setIsLoading(true)
-      const doc = { equipmentName, description, city, province, nearestTown, email, phoneNumber , district, address }
+      const doc = { equipmentName, description, city, province, nearestTown, email, phoneNumber , district, address,  latitude, longitude, }
       if(!equipment){
       await addData("equipments", doc)
       }else{
@@ -124,6 +128,9 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent label="Email" value={email} setValue={setEmail} />
         <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
+        <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
+        <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+
          <SpaceBoxComponent>
           { !isLoading && equipment && <Button color="secondary" onClick={deleteEqipment}>   Delete User </Button>}
           { isLoading ? <CircularIndeterminate/> : <Button onClick={addOrUpdateEquipmentShop}> { equipment ? 'Update Data' : 'Insert Data'} </Button>}

@@ -71,11 +71,13 @@ const CreateAndUpdateSection = (props)=>{
     const [phoneNumber, setPhoneNumber] = useState("")
     const [vehicleCategory, setVehicleCategory] = useState("")
     const [numberOfSeats, setNumberOfSeats] = useState("")
+    const [latitude, setLatitude] = useState("")
+    const [longitude, setLongitude] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(()=>{
       if(vehicle){
-        const { hotelName, description, city, province, nearestTown, email, phoneNumber , district, address, vehicleCategory, numberOfSeats } = vehicle
+        const { hotelName, description, city, province, nearestTown, email, phoneNumber , district, address, vehicleCategory, numberOfSeats, latitude, longitude } = vehicle
         setVehicleName(hotelName)
         setDescription(description)
         setAddress(address)
@@ -87,12 +89,14 @@ const CreateAndUpdateSection = (props)=>{
         setPhoneNumber(phoneNumber)
         setNumberOfSeats(numberOfSeats)
         setVehicleCategory(vehicleCategory)
+        setLatitude(latitude)
+        setLongitude(longitude)
       }
     }, [])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = {  vehicleName, address, city, nearestTown, email, phoneNumber, description, province, district, vehicleCategory, numberOfSeats }
+      const doc = {  vehicleName, address, city, nearestTown, email, phoneNumber, description, province, district, vehicleCategory, numberOfSeats,  latitude, longitude, }
       if(!vehicle){
       await addData("vehicles", doc)
       }else{
@@ -135,6 +139,9 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
         <InputComponent label="Vehicle Category" value={vehicleCategory} setValue={setVehicleCategory} />
         <InputComponent label="Number Of Seats" value={numberOfSeats} setValue={setNumberOfSeats} />
+        <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
+        <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+
         <SpaceBoxComponent>
           { !isLoading && vehicle && <Button color="secondary" onClick={deleteHotel}>   Delete User </Button>}
           { isLoading ? <CircularIndeterminate/> : <Button onClick={addOrUpdateUser}> { vehicle ? 'Update Data' : 'Insert Data'} </Button>}

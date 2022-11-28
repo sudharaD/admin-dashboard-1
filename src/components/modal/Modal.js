@@ -2,14 +2,10 @@ import React from 'react'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-
-
-
 
 const modalWrapper = {
   overflow:"auto",
-  maxHeight:"100vh",
+  maxHeight:"80vh",
   display:"flex",
 };
 
@@ -22,22 +18,12 @@ const modalBlock = {
   margin:"auto",
 }
 
-const modalContentStyle ={
-  position:"relative",
-  background:"#fff",
-  boxShadow:24,
-  mt:3,
-  width:"20rem",
-  mb:3,
-  borderRadius:"10px",
-};
-
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 700,
+    transform: 'translate(-50%, -20%)',
+    width: 500,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,

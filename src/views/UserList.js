@@ -69,20 +69,26 @@ const CreateAndUpdateSection = (props)=>{
     const [city, setCity] = useState("")
     const [district, setDistrict] = useState("")
     const [nearestTown, setNearestTown] = useState("")
-    const [location, setLocation] = useState("")
+    const [latitude, setLatitude] = useState("")
+    const [longitude, setLongitude] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(()=>{
       if(user){
-        const { title, description} = user
+        const { title, description, city, district, nearestTown, latitude, longitude} = user
         setTitle(title)
         setDescription(description)
+        setCity(city)
+        setDistrict(district)
+        setNearestTown(nearestTown)
+        setLatitude(latitude)
+        setLongitude(longitude)
       }
     }, [])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = { title, description }
+      const doc = { title, description, city, district, latitude, longitude, nearestTown }
       if(!user){
       await addData("screens", doc)
       }else{
@@ -104,20 +110,20 @@ const CreateAndUpdateSection = (props)=>{
      }
      setOpen(false)
      setUser(null)
-
-
     }
-
-    
 
     return (
       <div>
+        
         <InputComponent label="Title" value={title} setValue={setTitle} />
         <InputComponent label="Description" value={description} setValue={setDescription} />
         <InputComponent label="Province" value={province} setValue={setProvice} />
-        <InputComponent label="District" value={province} setValue={setProvice} />
-        <InputComponent label="City" value={province} setValue={setProvice} />
-        <InputComponent label="Nearest Town" value={province} setValue={setProvice} />
+        <InputComponent label="District" value={district} setValue={setDistrict} />
+        <InputComponent label="City" value={city} setValue={setCity} />
+        <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
+        <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
+        <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+
         <SpaceBoxComponent>
           { !isLoading && user && <Button color="secondary" onClick={deleteUser}>   Delete User </Button>}
           { isLoading ? <CircularIndeterminate/> : <Button onClick={addOrUpdateUser}> { user ? 'Update Data' : 'Insert Data'} </Button>}

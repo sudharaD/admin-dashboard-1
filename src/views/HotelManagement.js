@@ -69,11 +69,14 @@ const CreateAndUpdateSection = (props)=>{
     const [nearestTown, setNearestTown] = useState("")
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
+    const [latitude, setLatitude] = useState("")
+    const [longitude, setLongitude] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+
 
     useEffect(()=>{
       if(hotel){
-        const { hotelName, description, city, province, nearestTown, email, phoneNumber , district, address, } = hotel
+        const { hotelName, description, city, province, nearestTown, email, phoneNumber , district, address, latitude, longitude } = hotel
         setHotelName(hotelName)
         setDescription(description)
         setAddress(address)
@@ -83,12 +86,14 @@ const CreateAndUpdateSection = (props)=>{
         setNearestTown(nearestTown)
         setEmail(email)
         setPhoneNumber(phoneNumber)
+        setLatitude(latitude)
+        setLongitude(longitude)
       }
     }, [])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = { hotelName, address, city, nearestTown, email, phoneNumber, description, province, district }
+      const doc = { hotelName, address, city, nearestTown, email, phoneNumber, description, province, district,  latitude, longitude, }
       if(!hotel){
       await addData("hotels", doc)
       }else{
@@ -127,6 +132,9 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent label="Email" value={email} setValue={setEmail} />
         <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
+        <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
+        <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+
         <SpaceBoxComponent>
           { !isLoading && hotel && <Button color="secondary" onClick={deleteHotel}>   Delete User </Button>}
           { isLoading ? <CircularIndeterminate/> : <Button onClick={addOrUpdateUser}> { hotel ? 'Update Data' : 'Insert Data'} </Button>}

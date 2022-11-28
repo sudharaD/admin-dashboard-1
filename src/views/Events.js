@@ -65,22 +65,26 @@ const CreateAndUpdateSection = (props)=>{
     const [departureDate, setDepartureDate] = useState("")
     const [duration, setDuration] = useState("")
     const [description, setDescription] = useState("")
+    const [latitude, setLatitude] = useState("")
+    const [longitude, setLongitude] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(()=>{
       if(event){
-        const { memberCount, description, duration, budget,departureDate } = event
+        const { memberCount, description, duration, budget,departureDate, latitude, longitude } = event
         setMemberCount(memberCount)
         setDepartureDate(departureDate)
         setBudget(budget)
         setDuration(duration)
         setDescription(description)
+        setLatitude(latitude)
+        setLongitude(longitude)
       }
     }, [])
 
     const addOrUpdateEvent = async()=>{
       setIsLoading(true)
-      const doc = {  memberCount, budget,  description,  departureDate, duration }
+      const doc = {  memberCount, budget,  description,  departureDate, duration,  latitude, longitude, }
       if(!event){
       await addData("events", doc)
       }else{
@@ -115,6 +119,9 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Description" value={departureDate} setValue={setDepartureDate} />
         <InputComponent label="Departure Date" value={duration} setValue={setDuration} />
         <InputComponent label="Description" value={description} setValue={setDescription} />
+        <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
+        <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+
         <SpaceBoxComponent>
           { !isLoading && event && <Button color="secondary" onClick={deleteHotel}>   Delete User </Button>}
           { isLoading ? <CircularIndeterminate/> : <Button onClick={addOrUpdateEvent}> { event ? 'Update Data' : 'Insert Data'} </Button>}
