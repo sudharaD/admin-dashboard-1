@@ -1,6 +1,7 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
@@ -14,13 +15,12 @@ import AdminLayout from "layouts/Admin.js";
 import User from "../src/views/UserProfile"
 import Login from "../src/views/Login"
 
-ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Route path="/login"> <Login /> </Route> 
-      <Redirect from="/" to="/login" />
-    </Switch>
-  </BrowserRouter>,
-  document.getElementById("root")
-);
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(<BrowserRouter>
+  <Switch>
+    <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+    <Route path="/login"> <Login /> </Route> 
+    <Redirect from="/" to="/login" />
+  </Switch>
+</BrowserRouter>);

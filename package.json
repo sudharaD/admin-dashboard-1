@@ -13,6 +13,8 @@
     "axios": "^0.27.2",
     "bootstrap": "4.6.0",
     "chartist": "0.10.1",
+    "firebase": "^8.4.1",
+    "firebase-tools": "^9.9.0",
     "node-sass": "^7.0.1",
     "react": "^18.1.0",
     "react-bootstrap": "1.4.3",
