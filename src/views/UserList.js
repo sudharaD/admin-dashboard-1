@@ -49,7 +49,7 @@ const UserList = () => {
   return (
     <Container fluid>
       {/* new users */}
-      <ModalComponent setUser={setUser} open={open} setOpen={setOpen} name="Add New Screen">
+      <ModalComponent setItem={setUser} open={open} setOpen={setOpen} name="Add New Screen">
         <CreateAndUpdateSection dataUpdateToggle={dataUpdateToggle} setDataUpdateToggle={setDataUpdateToggle} user={user} setOpen={setOpen} setUser={setUser} />
       </ModalComponent>
 
@@ -103,6 +103,8 @@ const CreateAndUpdateSection = (props)=>{
         setDataUpdateToggle(!dataUpdateToggle)
      }
      setOpen(false)
+     setUser(null)
+
 
     }
 
