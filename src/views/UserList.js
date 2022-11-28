@@ -1,5 +1,5 @@
-import { httpRequest } from 'http/Http';
 import React, { useEffect, useState } from 'react'
+import {getAllData, addData, updateData, deleteData} from '../http/api-requests'
 
 import {
     Button,
@@ -11,6 +11,7 @@ import InputComponent from 'components/InputComponent/InputComponent';
 import SpaceBoxComponent from 'components/SpaceBox/SpaceBox';
 import ModalComponent from 'components/modal/Modal';
 import CardComponent from 'components/card/CardComponent';
+import CircularIndeterminate from 'components/progress/CircularIndeterminate';
 
 const UserList = () => {
     
@@ -19,19 +20,8 @@ const UserList = () => {
     const [user, setUser] = useState(null)
     const [open, setOpen] = useState(false);
     const [userId, setUserId] = useState(null);
-
-    console.log(users);
-
-
-    const getUsers = async ()=>{
-      // default get users
-      // setUsers(defaultUsers)
-      return;
-      const reauest = await httpRequest({ url : 'users/find-users', method :'get'})
-      if(reauest.success){
-        // setUsers(reauest.users)
-      }
-    }
+    const [isLoading, setIsLoading] = useState(false)
+    const [dataUpdateToggle, setDataUpdateToggle] = useState(false)
 
     const identifyUser = (index)=>{
       const specificUser = users.find((user)=> user.id === index)
@@ -39,15 +29,28 @@ const UserList = () => {
     }
   
     useEffect(() => {
-      getUsers()
-    }, [])
+      getUserData()
+    }, [dataUpdateToggle])
 
+    const getUserData = async()=>{
+      setIsLoading(true)
+      const response = await getAllData("screens")
+      setIsLoading(false)
+      const {success, data} = response
+      if(success){
+        setUsers(data)
+      }
+    }
+
+  if(isLoading){
+    return <CircularIndeterminate  />
+  }
 
   return (
     <Container fluid>
       {/* new users */}
       <ModalComponent setUser={setUser} open={open} setOpen={setOpen} name="Add New Screen">
-        <CreateAndUpdateSection user={user} setOpen={setOpen} setUsers={setUsers} />
+        <CreateAndUpdateSection dataUpdateToggle={dataUpdateToggle} setDataUpdateToggle={setDataUpdateToggle} user={user} setOpen={setOpen} setUser={setUser} />
       </ModalComponent>
 
       {/* list of users */}
@@ -58,7 +61,7 @@ const UserList = () => {
 }
 
 const CreateAndUpdateSection = (props)=>{
-  const {setUsers, setOpen, user} = props
+  const {setUser, setOpen, user, dataUpdateToggle, setDataUpdateToggle} = props
 
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
@@ -67,6 +70,7 @@ const CreateAndUpdateSection = (props)=>{
     const [district, setDistrict] = useState("")
     const [nearestTown, setNearestTown] = useState("")
     const [location, setLocation] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(()=>{
       if(user){
@@ -76,34 +80,33 @@ const CreateAndUpdateSection = (props)=>{
       }
     }, [])
 
-    const addOrUpdateUser = ()=>{
-
-      if(user){  
-        setUsers(users =>{
-          const filteredUsers = users.filter(curUser=> curUser.id !== user.id)
-          console.log(filteredUsers, 'filteredUsers');
-          const editableUser = {...user, title, description}
-          const returnArr = [...filteredUsers, editableUser]
-
-          return returnArr.sort((a, b)=> a.id - b.id )
-        })
+    const addOrUpdateUser = async()=>{
+      setIsLoading(true)
+      const doc = { title, description }
+      if(!user){
+      await addData("screens", doc)
       }else{
-        setUsers(users=> [...users, { id : (users.length + 1),  title, description}])
+        await updateData('screens', user.id, doc)
       }
-
+      setIsLoading(false)
+      setDataUpdateToggle(!dataUpdateToggle)
       setOpen(false)
+      setUser(null)
     }
 
-    const deleteUser = ()=>{
+
+    const deleteUser = async()=>{
       if(user){
-        setUsers(users =>{
-          const filteredUsers = users.filter(curUser=> curUser.id !== user.id)
-          return filteredUsers.sort((a, b)=> a.id - b.id )
-        })
+        setIsLoading(true)
+        await deleteData('screens', user.id)
+        setIsLoading(false)
+        setDataUpdateToggle(!dataUpdateToggle)
      }
      setOpen(false)
 
     }
+
+    
 
     return (
       <div>
@@ -114,8 +117,8 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="City" value={province} setValue={setProvice} />
         <InputComponent label="Nearest Town" value={province} setValue={setProvice} />
         <SpaceBoxComponent>
-          { user && <Button color="secondary" onClick={deleteUser}> Delete User </Button>}
-          <Button onClick={addOrUpdateUser}> { user ? 'Update Data' : 'Insert Data'} </Button>
+          { !isLoading && user && <Button color="secondary" onClick={deleteUser}>   Delete User </Button>}
+          { isLoading ? <CircularIndeterminate/> : <Button onClick={addOrUpdateUser}> { user ? 'Update Data' : 'Insert Data'} </Button>}
         </SpaceBoxComponent>
       </div>
     )
