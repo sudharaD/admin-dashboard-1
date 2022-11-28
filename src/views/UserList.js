@@ -12,6 +12,7 @@ import SpaceBoxComponent from 'components/SpaceBox/SpaceBox';
 import ModalComponent from 'components/modal/Modal';
 import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
+import ImageUpload from 'components/fileUpload/FileUpload';
 
 const UserList = () => {
     
@@ -19,7 +20,6 @@ const UserList = () => {
     const [users, setUsers] = useState([])
     const [user, setUser] = useState(null)
     const [open, setOpen] = useState(false);
-    const [userId, setUserId] = useState(null);
     const [isLoading, setIsLoading] = useState(false)
     const [dataUpdateToggle, setDataUpdateToggle] = useState(false)
 
@@ -71,24 +71,27 @@ const CreateAndUpdateSection = (props)=>{
     const [nearestTown, setNearestTown] = useState("")
     const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
+    const [url, setUrl] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(()=>{
       if(user){
-        const { title, description, city, district, nearestTown, latitude, longitude} = user
+        const { title, description, city, district, nearestTown, latitude, longitude, url, province} = user
         setTitle(title)
         setDescription(description)
         setCity(city)
         setDistrict(district)
         setNearestTown(nearestTown)
+        setProvice(province)
         setLatitude(latitude)
         setLongitude(longitude)
+        setUrl(url)
       }
     }, [])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = { title, description, city, district, latitude, longitude, nearestTown }
+      const doc = { title, description, city, district, latitude, longitude, nearestTown, url, province }
       if(!user){
       await addData("screens", doc)
       }else{
@@ -114,7 +117,7 @@ const CreateAndUpdateSection = (props)=>{
 
     return (
       <div>
-        
+
         <InputComponent label="Title" value={title} setValue={setTitle} />
         <InputComponent label="Description" value={description} setValue={setDescription} />
         <InputComponent label="Province" value={province} setValue={setProvice} />
@@ -123,6 +126,7 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
         <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+        <ImageUpload url={url} setUrl={setUrl} />
 
         <SpaceBoxComponent>
           { !isLoading && user && <Button color="secondary" onClick={deleteUser}>   Delete User </Button>}

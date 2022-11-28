@@ -5,7 +5,6 @@ export const addData = async(collection, dataSet)=>{
     let response;
 
     await db.collection(collection).doc().set(dataSet).then((data) => {
-          console.log(data);
           response = { success: true, data }
     }).catch((error) => {
           response = { success : false }
@@ -19,7 +18,6 @@ export const updateData = async(collection, docId, dataSet)=>{
     let response;
 
     await db.collection(collection).doc(docId).update(dataSet).then((data) => {
-          console.log(data);
           response = { success: true, data }
     }).catch((error) => {
           response = { success : false }
@@ -47,7 +45,6 @@ export const getAllData = async(collection)=>{
         querySnapshot.forEach((doc) => {
             data.push({...doc.data(), id:doc.id})
         });
-        console.log(data);
         response = { success: true, data }
     }).catch((error) => {
           response = { success : false }

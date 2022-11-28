@@ -11,6 +11,7 @@ import SpaceBoxComponent from 'components/SpaceBox/SpaceBox';
 import ModalComponent from 'components/modal/Modal';
 import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
+import ImageUpload from 'components/fileUpload/FileUpload';
 
 const VehicleList = () => {
     
@@ -73,11 +74,13 @@ const CreateAndUpdateSection = (props)=>{
     const [numberOfSeats, setNumberOfSeats] = useState("")
     const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
+    const [url, setUrl1] = useState("")
+    const [url2, setUrl2] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(()=>{
       if(vehicle){
-        const { hotelName, description, city, province, nearestTown, email, phoneNumber , district, address, vehicleCategory, numberOfSeats, latitude, longitude } = vehicle
+        const { hotelName, description, city, province, nearestTown, email, phoneNumber , district, address, vehicleCategory, numberOfSeats, latitude, longitude, url, url2 } = vehicle
         setVehicleName(hotelName)
         setDescription(description)
         setAddress(address)
@@ -91,12 +94,15 @@ const CreateAndUpdateSection = (props)=>{
         setVehicleCategory(vehicleCategory)
         setLatitude(latitude)
         setLongitude(longitude)
+        setUrl1(url)
+        setUrl2(url2)
       }
     }, [])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = {  vehicleName, address, city, nearestTown, email, phoneNumber, description, province, district, vehicleCategory, numberOfSeats,  latitude, longitude, }
+      const doc = {  vehicleName, address, city, nearestTown, email, phoneNumber, description, province, district, vehicleCategory, numberOfSeats,  latitude, longitude, url, url2 }
+      Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
       if(!vehicle){
       await addData("vehicles", doc)
       }else{
@@ -118,13 +124,7 @@ const CreateAndUpdateSection = (props)=>{
      }
      setOpen(false)
      setVehicle(null)
-
-
     }
-
-    console.log(numberOfSeats);
-
-    
 
     return (
       <div>
@@ -141,6 +141,8 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Number Of Seats" value={numberOfSeats} setValue={setNumberOfSeats} />
         <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
         <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+        <ImageUpload url={url} setUrl={setUrl1} name="Select Image 1" />
+        <ImageUpload url={url2} setUrl={setUrl2} name="Select Image 2" />
 
         <SpaceBoxComponent>
           { !isLoading && vehicle && <Button color="secondary" onClick={deleteHotel}>   Delete User </Button>}

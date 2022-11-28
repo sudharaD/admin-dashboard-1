@@ -12,7 +12,6 @@ import "./assets/css/demo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import AdminLayout from "layouts/Admin.js";
-import User from "../src/views/UserProfile"
 import Login from "../src/views/Login"
 
 const container = document.getElementById('root');
