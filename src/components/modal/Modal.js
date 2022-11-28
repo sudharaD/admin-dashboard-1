@@ -45,7 +45,6 @@ const ModalComponent = (props) => {
     <div style={{margin:'1rem 0'}}>
         <Button onClick={handleOpen}>{name}</Button>
         <Modal
-          disableScrollLock
           sx={modalWrapper}
           open={open}
           onClose={handleClose}

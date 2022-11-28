@@ -11,6 +11,7 @@ import SpaceBoxComponent from 'components/SpaceBox/SpaceBox';
 import ModalComponent from 'components/modal/Modal';
 import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
+import ImageUpload from 'components/fileUpload/FileUpload';
 
 const TravelEquipment = () => {
     
@@ -72,10 +73,12 @@ const CreateAndUpdateSection = (props)=>{
     const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+    const [url, setUrl1] = useState("")
+    const [url2, setUrl2] = useState("")
 
     useEffect(()=>{
       if(equipment){
-        const { equipmentName, description, city, province, nearestTown, email, phoneNumber , district, address, latitude, longitude } = equipment
+        const { equipmentName, description, city, province, nearestTown, email, phoneNumber , district, address, latitude, longitude, url, url2 } = equipment
         setEquipmentName(equipmentName)
         setDescription(description)
         setAddress(address)
@@ -87,12 +90,16 @@ const CreateAndUpdateSection = (props)=>{
         setPhoneNumber(phoneNumber)
         setLatitude(latitude)
         setLongitude(longitude)
+        setUrl1(url)
+        setUrl2(url2)
       }
     }, [])
 
     const addOrUpdateEquipmentShop = async()=>{
       setIsLoading(true)
-      const doc = { equipmentName, description, city, province, nearestTown, email, phoneNumber , district, address,  latitude, longitude, }
+      const doc = { equipmentName, description, city, province, nearestTown, email, phoneNumber , district, address,  latitude, longitude, url, url2 }
+      Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
+
       if(!equipment){
       await addData("equipments", doc)
       }else{
@@ -130,6 +137,8 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
         <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
         <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+        <ImageUpload url={url} setUrl={setUrl1} name="Select Image 1" />
+        <ImageUpload url={url2} setUrl={setUrl2} name="Select Image 2" />
 
          <SpaceBoxComponent>
           { !isLoading && equipment && <Button color="secondary" onClick={deleteEqipment}>   Delete User </Button>}

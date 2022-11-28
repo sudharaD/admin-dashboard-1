@@ -1,18 +1,8 @@
-
-import React, { Component, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation, Route, Switch } from "react-router-dom";
-
 import AdminNavbar from "components/Navbars/AdminNavbar";
-import Footer from "components/Footer/Footer";
 import Sidebar from "components/Sidebar/Sidebar";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
-
-// new routes
-import Users from '../views/UserProfile'
-import CarProfile from '../views/CarProfile'
-
 import routes from "routes.js";
-
 import sidebarImage from "assets/img/sidebar-3.jpg";
 import { useHistory } from "react-router-dom";
 
@@ -35,20 +25,7 @@ function Admin() {
 
 
   const newRoutes = [...routes, 
-    {
-    path: "/name/:id",
-    name: "User",
-    icon: "nc-icon nc-chart-pie-35",
-    component: Users,
-    layout: "/admin",
-  },
-    {
-    path: "/car/:id",
-    name: "Car",
-    icon: "nc-icon nc-chart-pie-35",
-    component: CarProfile,
-    layout: "/admin",
-  },
+    
 ]
 
   const getRoutes = (routes) => {

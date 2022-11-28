@@ -11,6 +11,7 @@ import SpaceBoxComponent from 'components/SpaceBox/SpaceBox';
 import ModalComponent from 'components/modal/Modal';
 import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
+import ImageUpload from 'components/fileUpload/FileUpload';
 
 const EventManagement = () => {
     
@@ -68,10 +69,13 @@ const CreateAndUpdateSection = (props)=>{
     const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+    const [url, setUrl1] = useState("")
+    const [url2, setUrl2] = useState("")
 
     useEffect(()=>{
       if(event){
-        const { memberCount, description, duration, budget,departureDate, latitude, longitude } = event
+        const { memberCount, description, duration, budget,departureDate, latitude, longitude, url, url2 } = event
+        
         setMemberCount(memberCount)
         setDepartureDate(departureDate)
         setBudget(budget)
@@ -79,14 +83,18 @@ const CreateAndUpdateSection = (props)=>{
         setDescription(description)
         setLatitude(latitude)
         setLongitude(longitude)
+        setUrl1(url)
+        setUrl2(url2)
       }
     }, [])
 
     const addOrUpdateEvent = async()=>{
       setIsLoading(true)
-      const doc = {  memberCount, budget,  description,  departureDate, duration,  latitude, longitude, }
+      const doc = {  memberCount, budget,  description,  departureDate, duration,  latitude, longitude, url, url2 }
+      Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
+
       if(!event){
-      await addData("events", doc)
+      await addData("events", JSON.parse(JSON.stringify(doc)))
       }else{
         await updateData('events', event.id, doc)
       }
@@ -121,6 +129,8 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Description" value={description} setValue={setDescription} />
         <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
         <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+        <ImageUpload url={url} setUrl={setUrl1} name="Select Image 1" />
+        <ImageUpload url={url2} setUrl={setUrl2} name="Select Image 2" />
 
         <SpaceBoxComponent>
           { !isLoading && event && <Button color="secondary" onClick={deleteHotel}>   Delete User </Button>}

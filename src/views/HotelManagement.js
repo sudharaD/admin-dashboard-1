@@ -11,6 +11,7 @@ import SpaceBoxComponent from 'components/SpaceBox/SpaceBox';
 import ModalComponent from 'components/modal/Modal';
 import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
+import ImageUpload from 'components/fileUpload/FileUpload';
 
 const HotelManagement = () => {
     
@@ -71,12 +72,14 @@ const CreateAndUpdateSection = (props)=>{
     const [phoneNumber, setPhoneNumber] = useState("")
     const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
+    const [url, setUrl1] = useState("")
+    const [url2, setUrl2] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
 
     useEffect(()=>{
       if(hotel){
-        const { hotelName, description, city, province, nearestTown, email, phoneNumber , district, address, latitude, longitude } = hotel
+        const { hotelName, description, city, province, nearestTown, email, phoneNumber , district, address, latitude, longitude, url, url2 } = hotel
         setHotelName(hotelName)
         setDescription(description)
         setAddress(address)
@@ -88,12 +91,16 @@ const CreateAndUpdateSection = (props)=>{
         setPhoneNumber(phoneNumber)
         setLatitude(latitude)
         setLongitude(longitude)
+        setUrl1(url)
+        setUrl2(url2)
       }
     }, [])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = { hotelName, address, city, nearestTown, email, phoneNumber, description, province, district,  latitude, longitude, }
+      const doc = { hotelName, address, city, nearestTown, email, phoneNumber, description, province, district,  latitude, longitude, url, url2 }
+      Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
+
       if(!hotel){
       await addData("hotels", doc)
       }else{
@@ -115,8 +122,6 @@ const CreateAndUpdateSection = (props)=>{
      }
      setOpen(false)
      setHotel(null)
-
-
     }
 
     
@@ -134,6 +139,8 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
         <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
         <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+        <ImageUpload url={url} setUrl={setUrl1} name="Select Image 1" />
+        <ImageUpload url={url2} setUrl={setUrl2} name="Select Image 2" />
 
         <SpaceBoxComponent>
           { !isLoading && hotel && <Button color="secondary" onClick={deleteHotel}>   Delete User </Button>}

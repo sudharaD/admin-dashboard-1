@@ -13,7 +13,6 @@ const LoginComponent = () => {
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
-      console.log(user, "===========");
       if (user) {
         setUser(user);
         history.push("/admin/main");
