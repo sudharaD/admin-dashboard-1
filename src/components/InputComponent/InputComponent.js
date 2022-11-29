@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 export default function BasicTextFields(props) {
-  const {rows = 0,label, value, setValue, type = "text"} = props
+  const {rows = 0, label, value, setValue, type = "text"} = props
 
   return (
     <div style={{width:'100%', margin : '1rem 0'}}>
