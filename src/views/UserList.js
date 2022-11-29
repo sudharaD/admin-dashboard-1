@@ -30,7 +30,7 @@ const UserList = () => {
 
     const getUserData = async()=>{
       setIsLoading(true)
-      const response = await getAllData("screens")
+      const response = await getAllData("main")
       setIsLoading(false)
       const {success, data} = response
       if(success){
@@ -67,12 +67,12 @@ const CreateAndUpdateSection = (props)=>{
     const [nearestTown, setNearestTown] = useState("")
     const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
-    const [url, setUrl] = useState("")
+    const [pic, setUrl] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(()=>{
       if(user){
-        const { title, description, city, district, nearestTown, latitude, longitude, url, province} = user
+        const { title, description, city, district, nearestTown, latitude, longitude, pic, province} = user
         setTitle(title)
         setDescription(description)
         setCity(city)
@@ -81,17 +81,19 @@ const CreateAndUpdateSection = (props)=>{
         setProvice(province)
         setLatitude(latitude)
         setLongitude(longitude)
-        setUrl(url)
+        setUrl(pic)
       }
     }, [user])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = { title, description, city, district, latitude, longitude, nearestTown, url, province }
+      const doc = { title, description, city, district, latitude, longitude, nearestTown, pic, province }
+      Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
+
       if(!user){
-      await addData("screens", doc)
+      await addData("main", doc)
       }else{
-        await updateData('screens', user.id, doc)
+        await updateData('main', user.id, doc)
       }
       setIsLoading(false)
       setDataUpdateToggle(!dataUpdateToggle)
@@ -103,7 +105,7 @@ const CreateAndUpdateSection = (props)=>{
     const deleteUser = async()=>{
       if(user){
         setIsLoading(true)
-        await deleteData('screens', user.id)
+        await deleteData('main', user.id)
         setIsLoading(false)
         setDataUpdateToggle(!dataUpdateToggle)
      }
@@ -123,7 +125,7 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
         <InputComponent type="number" label="Longitude" value={longitude} setValue={setLongitude} />
-        <ImageUpload url={url} setUrl={setUrl} />
+        <ImageUpload url={pic} setUrl={setUrl} />
         <InputComponent label="Description" value={description} setValue={setDescription} rows={5}/>
 
         <SpaceBoxComponent>
