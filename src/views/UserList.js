@@ -3,15 +3,16 @@ import {getAllData, addData, updateData, deleteData} from '../http/api-requests'
 
 import {  Container } from "react-bootstrap";
 import Button from '@mui/material/Button';
-
+import {provinceList} from '../utils/province'
+import {districtsList} from '../utils/districts'
 import InputComponent from 'components/InputComponent/InputComponent';
 import SpaceBoxComponent from 'components/SpaceBox/SpaceBox';
 import ModalComponent from 'components/modal/Modal';
 import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
 import ImageUpload from 'components/fileUpload/FileUpload';
-import { TextField } from '@mui/material';
 import SearchComponent from 'components/search/SearchComponent';
+import DropDown from 'components/dropdown/DropDown';
 
 const UserList = () => {
     
@@ -25,7 +26,7 @@ const UserList = () => {
 
     const identifyUser = (index)=>{
       const specificUser = users.find((user)=> user.id === index)
-      setUser(specificUser)
+      setUser((specificUser))
     }
   
     useEffect(() => {
@@ -91,6 +92,7 @@ const CreateAndUpdateSection = (props)=>{
 
     useEffect(()=>{
       if(user){
+        
         const { title, description, city, district, nearestTown, latitude, longitude, pic, province} = user
         setTitle(title)
         setDescription(description)
@@ -129,8 +131,11 @@ const CreateAndUpdateSection = (props)=>{
         setDataUpdateToggle(!dataUpdateToggle)
      }
      setOpen(false)
-     setUser(null)
+     setUser("")
     }
+
+    console.log(province, district);
+
 
     return (
       <div>
@@ -138,8 +143,9 @@ const CreateAndUpdateSection = (props)=>{
        { isLoading && <CircularIndeterminate />}
 
         <InputComponent label="Title" value={title} setValue={setTitle} />
-        <InputComponent label="Province" value={province} setValue={setProvice} />
-        <InputComponent label="District" value={district} setValue={setDistrict} />
+        <DropDown label="Province" select={province} setSelect={setProvice} items={provinceList} />
+        <DropDown label="District" select={district} setSelect={setDistrict} items={districtsList} />
+
         <InputComponent label="City" value={city} setValue={setCity} />
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
@@ -157,9 +163,6 @@ const CreateAndUpdateSection = (props)=>{
 
 const ListSection = (props)=>{
   const { users, setOpen, identifyUser } = props
-
-    useEffect(()=>{}, [])
-
     const editHandler = (index)=>{
       identifyUser(index)
       setOpen(true)

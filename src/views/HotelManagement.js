@@ -12,6 +12,9 @@ import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
 import ImageUpload from 'components/fileUpload/FileUpload';
 import SearchComponent from 'components/search/SearchComponent';
+import DropDown from 'components/dropdown/DropDown';
+import { provinceList } from 'utils/province';
+import { districtsList } from 'utils/districts';
 
 const HotelManagement = () => {
     
@@ -146,8 +149,8 @@ const CreateAndUpdateSection = (props)=>{
         {isLoading && <CircularIndeterminate />}
         <InputComponent label="Hotel Name" value={hotelName} setValue={setHotelName} />
         <InputComponent label="Hotel Address" value={address} setValue={setAddress} />
-        <InputComponent label="Province" value={province} setValue={setProvice} />
-        <InputComponent label="District" value={district} setValue={setDistrict} />
+        <DropDown label="Province" select={province} setSelect={setProvice} items={provinceList} />
+        <DropDown label="District" select={district} setSelect={setDistrict} items={districtsList} />
         <InputComponent label="City" value={city} setValue={setCity} />
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent label="Email" value={email} setValue={setEmail} />
