@@ -11,6 +11,7 @@ import ModalComponent from 'components/modal/Modal';
 import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
 import ImageUpload from 'components/fileUpload/FileUpload';
+import SearchComponent from 'components/search/SearchComponent';
 
 const EventManagement = () => {
     
@@ -19,6 +20,9 @@ const EventManagement = () => {
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [dataUpdateToggle, setDataUpdateToggle] = useState(false)
+    const [search, setSearch] = useState("")
+    const [allEvents, setAllEvents] = useState([])
+
 
     const identifyEvent = (id)=>{
       const specificEvent = events.find((event)=> event.id === id)
@@ -29,6 +33,15 @@ const EventManagement = () => {
       getEventsData()
     }, [dataUpdateToggle])
 
+    useEffect(()=>{
+      if(search){
+        const searchedUsers = allEvents.filter(user=> user?.description?.toLowerCase().includes(search.toLowerCase()))
+        setEvents(()=>[...searchedUsers])
+      }else{
+        setEvents(allEvents)
+      }
+    }, [search])
+
     const getEventsData = async()=>{
       setIsLoading(true)
       const response = await getAllData("events")
@@ -36,6 +49,7 @@ const EventManagement = () => {
       const {success, data} = response
       if(success){
         setEvents(data)
+        setAllEvents(data)
       }
     }
 
@@ -45,6 +59,8 @@ const EventManagement = () => {
 
   return (
     <Container fluid>
+      {/* search  */}
+      <SearchComponent search={search} setSearch={setSearch} />
       {/* new users */}
       <ModalComponent setItem={setEvent} open={open} setOpen={setOpen} name="Event Registration">
         <CreateAndUpdateSection dataUpdateToggle={dataUpdateToggle} setDataUpdateToggle={setDataUpdateToggle} event={event} setOpen={setOpen} setEvent={setEvent} />
@@ -122,13 +138,12 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Member count" value={memberCount} setValue={setMemberCount} />
         <InputComponent label="Budget" value={budget} setValue={setBudget} />
         <InputComponent label="Departure Date" value={duration} setValue={setDuration} />
-        <InputComponent label="Description" value={description} setValue={setDescription} />
         <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
         <InputComponent type="number" label="Longitude" value={longitude} setValue={setLongitude} />
         <ImageUpload url={pic} setUrl={setUrl1} name="Select Image 1" />
         <ImageUpload url={pic1} setUrl={setUrl2} name="Select Image 2" />
 
-        <InputComponent rows={5} label="Description" value={departureDate} setValue={setDepartureDate} />
+        <InputComponent rows={5} label="Description" value={description} setValue={setDescription} />
 
 
         <SpaceBoxComponent>

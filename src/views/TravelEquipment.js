@@ -11,14 +11,18 @@ import ModalComponent from 'components/modal/Modal';
 import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
 import ImageUpload from 'components/fileUpload/FileUpload';
+import SearchComponent from 'components/search/SearchComponent';
 
 const TravelEquipment = () => {
     
     const [equipments, setEquipments] = useState([])
-    const [equipment, setEquipment] = useState(null)
+    const [allEquipments, setAllEquipments] = useState([])
+    const [equipment, setEquipment] = useState("")
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [dataUpdateToggle, setDataUpdateToggle] = useState(false)
+    const [search, setSearch] = useState("")
+
 
     const identifyEquipment = (id)=>{
       const specificEquipment = equipments.find((eqp)=> eqp.id === id)
@@ -29,6 +33,15 @@ const TravelEquipment = () => {
       getEquipmentData()
     }, [dataUpdateToggle])
 
+    useEffect(()=>{
+      if(search){
+        const searchedEquipments = allEquipments.filter(equ=> equ?.equipmentName?.toLowerCase().includes(search.toLowerCase()))
+        setEquipments(()=>[...searchedEquipments])
+      }else{
+        setEquipments(allEquipments)
+      }
+    }, [search])
+
     const getEquipmentData = async()=>{
       setIsLoading(true)
       const response = await getAllData("equipments")
@@ -36,6 +49,7 @@ const TravelEquipment = () => {
       const {success, data} = response
       if(success){
         setEquipments(data)
+        setAllEquipments(data)
       }
     }
 
@@ -45,6 +59,8 @@ const TravelEquipment = () => {
 
   return (
     <Container fluid>
+      {/* search  */}
+      <SearchComponent search={search} setSearch={setSearch} />
       {/* new users */}
       <ModalComponent setItem={setEquipment} open={open} setOpen={setOpen} name="Equipment Rent Shop Registration">
         <CreateAndUpdateSection dataUpdateToggle={dataUpdateToggle} setDataUpdateToggle={setDataUpdateToggle} equipment={equipment} setOpen={setOpen} setEquipment={setEquipment} />

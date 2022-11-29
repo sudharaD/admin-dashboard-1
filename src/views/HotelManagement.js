@@ -11,14 +11,18 @@ import ModalComponent from 'components/modal/Modal';
 import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
 import ImageUpload from 'components/fileUpload/FileUpload';
+import SearchComponent from 'components/search/SearchComponent';
 
 const HotelManagement = () => {
     
     const [hotels, setHotels] = useState([])
+    const [allHotels, setAllHotels] = useState([])
     const [hotel, setHotel] = useState(null)
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [dataUpdateToggle, setDataUpdateToggle] = useState(false)
+    const [search, setSearch] = useState("")
+
 
     const identifyHotel = (id)=>{
       const specificUser = hotels.find((hotel)=> hotel.id === id)
@@ -29,6 +33,15 @@ const HotelManagement = () => {
       getHotelData()
     }, [dataUpdateToggle])
 
+    useEffect(()=>{
+      if(search){
+        const searchedHotels = allHotels.filter(hotel=> hotel?.hotelName?.toLowerCase().includes(search.toLowerCase()))
+        setHotels(()=>[...searchedHotels])
+      }else{
+        setHotels(allHotels)
+      }
+    }, [search])
+
     const getHotelData = async()=>{
       setIsLoading(true)
       const response = await getAllData("hotels")
@@ -36,6 +49,7 @@ const HotelManagement = () => {
       const {success, data} = response
       if(success){
         setHotels(data)
+        setAllHotels(data)
       }
     }
 
@@ -45,6 +59,8 @@ const HotelManagement = () => {
 
   return (
     <Container fluid>
+      {/* search  */}
+      <SearchComponent search={search} setSearch={setSearch} />
       {/* new users */}
       <ModalComponent setItem={setHotel} open={open} setOpen={setOpen} name="Hotel Registration">
         <CreateAndUpdateSection dataUpdateToggle={dataUpdateToggle} setDataUpdateToggle={setDataUpdateToggle} hotel={hotel} setOpen={setOpen} setHotel={setHotel} />
