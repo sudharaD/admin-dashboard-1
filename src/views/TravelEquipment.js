@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import {getAllData, addData, updateData, deleteData} from '../http/api-requests'
 
-import {
-    Button,
-    Container,
-  } from "react-bootstrap";
+
+import {  Container } from "react-bootstrap";
+import Button from '@mui/material/Button';
 
 import InputComponent from 'components/InputComponent/InputComponent';
 import SpaceBoxComponent from 'components/SpaceBox/SpaceBox';
@@ -144,8 +143,8 @@ const CreateAndUpdateSection = (props)=>{
 
 
          <SpaceBoxComponent>
-          { !isLoading && equipment && <Button color="secondary" onClick={deleteEqipment}>   Delete User </Button>}
-          { isLoading ? <CircularIndeterminate/> : <Button onClick={addOrUpdateEquipmentShop}> { equipment ? 'Update Data' : 'Insert Data'} </Button>}
+          { !isLoading && equipment && <Button color="error" variant="contained" onClick={deleteEqipment}>   Delete User </Button>}
+          { isLoading ? <CircularIndeterminate/> : <Button variant="contained" onClick={addOrUpdateEquipmentShop}> { equipment ? 'Update Data' : 'Insert Data'} </Button>}
         </SpaceBoxComponent>
       </div>
     )
