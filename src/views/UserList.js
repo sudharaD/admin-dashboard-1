@@ -6,7 +6,6 @@ import {
     Container,
   } from "react-bootstrap";
 
-import {useHistory} from 'react-router'
 import InputComponent from 'components/InputComponent/InputComponent';
 import SpaceBoxComponent from 'components/SpaceBox/SpaceBox';
 import ModalComponent from 'components/modal/Modal';
@@ -16,7 +15,6 @@ import ImageUpload from 'components/fileUpload/FileUpload';
 
 const UserList = () => {
     
-    const router = useHistory()
     const [users, setUsers] = useState([])
     const [user, setUser] = useState(null)
     const [open, setOpen] = useState(false);
@@ -87,7 +85,7 @@ const CreateAndUpdateSection = (props)=>{
         setLongitude(longitude)
         setUrl(url)
       }
-    }, [])
+    }, [user])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)

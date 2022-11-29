@@ -86,7 +86,7 @@ const CreateAndUpdateSection = (props)=>{
         setUrl1(url)
         setUrl2(url2)
       }
-    }, [])
+    }, [event])
 
     const addOrUpdateEvent = async()=>{
       setIsLoading(true)
