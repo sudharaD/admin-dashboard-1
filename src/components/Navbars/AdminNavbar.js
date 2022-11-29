@@ -1,18 +1,28 @@
 
-import React, { Component } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
-import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
+import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import {auth} from '../../firebase'
 
 import routes from "routes.js";
 import { useHistory } from "react-router-dom";
 
 function Header() {
-  const router = useHistory()
-  const logoutHandler = ()=>{
-    localStorage.removeItem("car-admin-user")
-    router.replace('/login')
-  }
+
+  const history = useHistory()
   const location = useLocation();
+
+  const logoutHandler = ()=>{
+    auth
+        .signOut()
+        .then(() => {
+          history.replace("/login");
+        })
+        .catch((err) => alert(err.message));
+    localStorage.removeItem("car-admin-user")
+  }
+
+
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
     document.documentElement.classList.toggle("nav-open");

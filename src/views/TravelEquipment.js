@@ -126,19 +126,22 @@ const CreateAndUpdateSection = (props)=>{
 
     return (
       <div>
+        {isLoading && <CircularIndeterminate /> }
         <InputComponent label="Equipment Name" value={equipmentName} setValue={setEquipmentName} />
         <InputComponent label="Address" value={address} setValue={setAddress} />
-        <InputComponent label="Description" value={description} setValue={setDescription} />
         <InputComponent label="Province" value={province} setValue={setProvice} />
         <InputComponent label="District" value={district} setValue={setDistrict} />
         <InputComponent label="City" value={city} setValue={setCity} />
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent label="Email" value={email} setValue={setEmail} />
         <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
-        <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
-        <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+        <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
+        <InputComponent type="number" label="Longitude" value={longitude} setValue={setLongitude} />
         <ImageUpload url={url} setUrl={setUrl1} name="Select Image 1" />
         <ImageUpload url={url2} setUrl={setUrl2} name="Select Image 2" />
+
+        <InputComponent rows={5} label="Description" value={description} setValue={setDescription} />
+
 
          <SpaceBoxComponent>
           { !isLoading && equipment && <Button color="secondary" onClick={deleteEqipment}>   Delete User </Button>}
@@ -160,7 +163,7 @@ const ListSection = (props)=>{
 
     return (
       <div style={{display:'flex', width:'100%', justifyContent:'flex-start', gap:'1rem', flexWrap:'wrap'}}>
-        { equipments.map((equipment, index)=> <CardComponent editHandler={editHandler} key={equipment.id} {...equipment} />
+        { equipments.map((equipment, index)=> <CardComponent mainHeader={equipment.equipmentName} editHandler={editHandler} key={equipment.id} {...equipment} />
          ) }
       </div>
     )
