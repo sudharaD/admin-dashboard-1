@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 export default function CardComponent(props) {
 
-  const { description, id, editHandler, url, mainHeader} = props
+  const { description, id, editHandler, pic, mainHeader} = props
 
   return (
     <Card onClick={()=>editHandler(id)}  sx={{ display: 'flex' ,  width: '350px', height: '11rem' , cursor:'pointer'}}>
@@ -28,7 +28,7 @@ export default function CardComponent(props) {
         style={{flex:1}}
         component="img"
         sx={{ width: 151 }}
-        image={url}
+        image={pic}
         alt="Live from space album cover"
       />
     </Card>

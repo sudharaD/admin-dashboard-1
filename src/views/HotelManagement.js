@@ -71,14 +71,14 @@ const CreateAndUpdateSection = (props)=>{
     const [phoneNumber, setPhoneNumber] = useState("")
     const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
-    const [url, setUrl1] = useState("")
-    const [url2, setUrl2] = useState("")
+    const [pic, setUrl1] = useState("")
+    const [pic1, setUrl2] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
 
     useEffect(()=>{
       if(hotel){
-        const { hotelName, description, city, province, nearestTown, email, phoneNumber , district, address, latitude, longitude, url, url2 } = hotel
+        const { hotelName, description, city, province, nearestTown, email, phoneNumber , district, address, latitude, longitude, pic, pic1 } = hotel
         setHotelName(hotelName)
         setDescription(description)
         setAddress(address)
@@ -90,14 +90,14 @@ const CreateAndUpdateSection = (props)=>{
         setPhoneNumber(phoneNumber)
         setLatitude(latitude)
         setLongitude(longitude)
-        setUrl1(url)
-        setUrl2(url2)
+        setUrl1(pic)
+        setUrl2(pic1)
       }
     }, [hotel])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = { hotelName, address, city, nearestTown, email, phoneNumber, description, province, district,  latitude, longitude, url, url2 }
+      const doc = { hotelName, address, city, nearestTown, email, phoneNumber, description, province, district,  latitude, longitude, pic, pic1 }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!hotel){
@@ -138,8 +138,8 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
         <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
         <InputComponent type="number" label="Longitude" value={longitude} setValue={setLongitude} />
-        <ImageUpload url={url} setUrl={setUrl1} name="Select Image 1" />
-        <ImageUpload url={url2} setUrl={setUrl2} name="Select Image 2" />
+        <ImageUpload url={pic} setUrl={setUrl1} name="Select Image 1" />
+        <ImageUpload url={pic1} setUrl={setUrl2} name="Select Image 2" />
 
         <InputComponent rows={5} label="Description" value={description} setValue={setDescription} />
 

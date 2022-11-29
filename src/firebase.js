@@ -1,14 +1,17 @@
 import firebase from "firebase";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCIG2zlcYDnVgjYHckDXF5LE7CeQhO_dnM",
-  authDomain: "react-disney-clone-dd5d8.firebaseapp.com",
-  projectId: "react-disney-clone-dd5d8",
-  storageBucket: "react-disney-clone-dd5d8.appspot.com",
-  messagingSenderId: "688665616991",
-  appId: "1:688665616991:web:9dd93dd45a6cec7f86b1ea",
-  measurementId: "G-D581XL63B3"
+  apiKey: "AIzaSyCrq0ux-0ZSRyzyOUEIFf-bROvkACIxZlQ",
+  authDomain: "travelerapp-fbbcd.firebaseapp.com",
+  databaseURL: "https://travelerapp-fbbcd-default-rtdb.firebaseio.com",
+  projectId: "travelerapp-fbbcd",
+  storageBucket: "travelerapp-fbbcd.appspot.com",
+  messagingSenderId: "21982079179",
+  appId: "1:21982079179:web:41f68304d86a8521c5534e",
+  measurementId: "G-CB94R2N5P0"
 };
+
+
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
