@@ -94,7 +94,7 @@ const CreateAndUpdateSection = (props)=>{
         setUrl1(url)
         setUrl2(url2)
       }
-    }, [])
+    }, [hotel])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)

@@ -97,7 +97,7 @@ const CreateAndUpdateSection = (props)=>{
         setUrl1(url)
         setUrl2(url2)
       }
-    }, [])
+    }, [vehicle])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
