@@ -11,14 +11,18 @@ import ModalComponent from 'components/modal/Modal';
 import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
 import ImageUpload from 'components/fileUpload/FileUpload';
+import SearchComponent from 'components/search/SearchComponent';
 
 const VehicleList = () => {
     
     const [vehicles, setVehicles] = useState([])
-    const [vehicle, setVehicle] = useState(null)
+    const [allVehicles, setAllVehicles] = useState([])
+    const [vehicle, setVehicle] = useState("")
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [dataUpdateToggle, setDataUpdateToggle] = useState(false)
+    const [search, setSearch] = useState("")
+
 
     const identifyVehicle = (id)=>{
       const specificVehicle = vehicles.find((vehicle)=> vehicle.id === id)
@@ -29,6 +33,15 @@ const VehicleList = () => {
       getVehicleData()
     }, [dataUpdateToggle])
 
+    useEffect(()=>{
+      if(search){
+        const searchedVehicles = allVehicles.filter(vehicle=> vehicle?.vehicleName?.toLowerCase().includes(search.toLowerCase()))
+        setVehicles(()=>[...searchedVehicles])
+      }else{
+        setVehicles(allVehicles)
+      }
+    }, [search])
+
     const getVehicleData = async()=>{
       setIsLoading(true)
       const response = await getAllData("vehicles")
@@ -36,6 +49,7 @@ const VehicleList = () => {
       const {success, data} = response
       if(success){
         setVehicles(data)
+        setAllVehicles(data)
       }
     }
 
@@ -45,6 +59,8 @@ const VehicleList = () => {
 
   return (
     <Container fluid>
+      {/* search  */}
+      <SearchComponent search={search} setSearch={setSearch} />
       {/* new users */}
       <ModalComponent setItem={setVehicle} open={open} setOpen={setOpen} name="Vehicle Registration">
         <CreateAndUpdateSection dataUpdateToggle={dataUpdateToggle} setDataUpdateToggle={setDataUpdateToggle} vehicle={vehicle} setOpen={setOpen} setVehicle={setVehicle} />

@@ -10,11 +10,15 @@ import ModalComponent from 'components/modal/Modal';
 import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
 import ImageUpload from 'components/fileUpload/FileUpload';
+import { TextField } from '@mui/material';
+import SearchComponent from 'components/search/SearchComponent';
 
 const UserList = () => {
     
     const [users, setUsers] = useState([])
-    const [user, setUser] = useState(null)
+    const [allUsers, setAllUsers] = useState([])
+    const [user, setUser] = useState("")
+    const [search, setSearch] = useState("")
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [dataUpdateToggle, setDataUpdateToggle] = useState(false)
@@ -28,6 +32,16 @@ const UserList = () => {
       getUserData()
     }, [dataUpdateToggle])
 
+    useEffect(()=>{
+      if(search){
+        const searchedUsers = allUsers.filter(user=> user?.title?.toLowerCase().includes(search.toLowerCase()))
+        setUsers(()=>[...searchedUsers])
+      }else{
+        setUsers(allUsers)
+      }
+    }, [search])
+
+
     const getUserData = async()=>{
       setIsLoading(true)
       const response = await getAllData("main")
@@ -35,6 +49,7 @@ const UserList = () => {
       const {success, data} = response
       if(success){
         setUsers(data)
+        setAllUsers(data)
       }
     }
 
@@ -42,8 +57,12 @@ const UserList = () => {
     return <CircularIndeterminate  />
   }
 
+
+
   return (
     <Container fluid>
+      {/* search  */}
+      <SearchComponent search={search} setSearch={setSearch} />
       {/* new users */}
       <ModalComponent setItem={setUser} open={open} setOpen={setOpen} name="Add New Screen">
         <CreateAndUpdateSection dataUpdateToggle={dataUpdateToggle} setDataUpdateToggle={setDataUpdateToggle} user={user} setOpen={setOpen} setUser={setUser} />
