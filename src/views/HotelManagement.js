@@ -128,19 +128,22 @@ const CreateAndUpdateSection = (props)=>{
 
     return (
       <div>
+        {isLoading && <CircularIndeterminate />}
         <InputComponent label="Hotel Name" value={hotelName} setValue={setHotelName} />
         <InputComponent label="Hotel Address" value={address} setValue={setAddress} />
-        <InputComponent label="Description" value={description} setValue={setDescription} />
         <InputComponent label="Province" value={province} setValue={setProvice} />
         <InputComponent label="District" value={district} setValue={setDistrict} />
         <InputComponent label="City" value={city} setValue={setCity} />
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent label="Email" value={email} setValue={setEmail} />
         <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
-        <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
-        <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+        <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
+        <InputComponent type="number" label="Longitude" value={longitude} setValue={setLongitude} />
         <ImageUpload url={url} setUrl={setUrl1} name="Select Image 1" />
         <ImageUpload url={url2} setUrl={setUrl2} name="Select Image 2" />
+
+        <InputComponent rows={5} label="Description" value={description} setValue={setDescription} />
+
 
         <SpaceBoxComponent>
           { !isLoading && hotel && <Button color="secondary" onClick={deleteHotel}>   Delete User </Button>}
@@ -162,7 +165,7 @@ const ListSection = (props)=>{
 
     return (
       <div style={{display:'flex', width:'100%', justifyContent:'flex-start', gap:'1rem', flexWrap:'wrap'}}>
-        { hotels.map((hotel, index)=> <CardComponent editHandler={editHandler} key={hotel.id} {...hotel} />
+        { hotels.map((hotel, index)=> <CardComponent mainHeader={hotel.hotelName} editHandler={editHandler} key={hotel.id} {...hotel} />
          ) }
       </div>
     )

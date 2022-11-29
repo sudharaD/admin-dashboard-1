@@ -128,9 +128,9 @@ const CreateAndUpdateSection = (props)=>{
 
     return (
       <div>
-        <InputComponent label="Hotel Name" value={vehicleName} setValue={setVehicleName} />
-        <InputComponent label="Hotel Address" value={address} setValue={setAddress} />
-        <InputComponent label="Description" value={description} setValue={setDescription} />
+        {isLoading && <CircularIndeterminate />}
+        <InputComponent label="Vehicle Name" value={vehicleName} setValue={setVehicleName} />
+        <InputComponent label="Vehicle Address" value={address} setValue={setAddress} />
         <InputComponent label="Province" value={province} setValue={setProvice} />
         <InputComponent label="District" value={district} setValue={setDistrict} />
         <InputComponent label="City" value={city} setValue={setCity} />
@@ -139,10 +139,13 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
         <InputComponent label="Vehicle Category" value={vehicleCategory} setValue={setVehicleCategory} />
         <InputComponent label="Number Of Seats" value={numberOfSeats} setValue={setNumberOfSeats} />
-        <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
-        <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+        <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
+        <InputComponent type="number" label="Longitude" value={longitude} setValue={setLongitude} />
         <ImageUpload url={url} setUrl={setUrl1} name="Select Image 1" />
         <ImageUpload url={url2} setUrl={setUrl2} name="Select Image 2" />
+
+        <InputComponent rows={5} label="Description" value={description} setValue={setDescription} />
+
 
         <SpaceBoxComponent>
           { !isLoading && vehicle && <Button color="secondary" onClick={deleteHotel}>   Delete User </Button>}
@@ -164,7 +167,7 @@ const ListSection = (props)=>{
 
     return (
       <div style={{display:'flex', width:'100%', justifyContent:'flex-start', gap:'1rem', flexWrap:'wrap'}}>
-        { vehicles.map((vehicle, index)=> <CardComponent editHandler={editHandler} key={vehicle.id} {...vehicle} />
+        { vehicles.map((vehicle, index)=> <CardComponent mainHeader={vehicle.vehicleName} editHandler={editHandler} key={vehicle.id} {...vehicle} />
          ) }
       </div>
     )

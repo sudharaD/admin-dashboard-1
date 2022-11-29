@@ -118,15 +118,17 @@ const CreateAndUpdateSection = (props)=>{
     return (
       <div>
 
+       { isLoading && <CircularIndeterminate />}
+
         <InputComponent label="Title" value={title} setValue={setTitle} />
-        <InputComponent label="Description" value={description} setValue={setDescription} />
         <InputComponent label="Province" value={province} setValue={setProvice} />
         <InputComponent label="District" value={district} setValue={setDistrict} />
         <InputComponent label="City" value={city} setValue={setCity} />
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
-        <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
-        <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+        <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
+        <InputComponent type="number" label="Longitude" value={longitude} setValue={setLongitude} />
         <ImageUpload url={url} setUrl={setUrl} />
+        <InputComponent label="Description" value={description} setValue={setDescription} rows={5}/>
 
         <SpaceBoxComponent>
           { !isLoading && user && <Button color="secondary" onClick={deleteUser}>   Delete User </Button>}
@@ -148,7 +150,7 @@ const ListSection = (props)=>{
 
     return (
       <div style={{display:'flex', width:'100%', justifyContent:'flex-start', gap:'1rem', flexWrap:'wrap'}}>
-        { users.map((user, index)=> <CardComponent editHandler={editHandler} key={user.id} {...user} />
+        { users.map((user, index)=> <CardComponent mainHeader={user.title} editHandler={editHandler} key={user.id} {...user} />
          ) }
       </div>
     )

@@ -2,10 +2,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 
 export default function BasicTextFields(props) {
-  const {md = 12,label, value, setValue, type = "text"} = props
+  const {rows = 0,label, value, setValue, type = "text"} = props
 
   return (
     <div style={{width:'100%', margin : '1rem 0'}}>
@@ -25,7 +26,10 @@ export default function BasicTextFields(props) {
         type={type}
         id="outlined-basic"
         label={label}
-        variant="outlined" />
+        variant="outlined"
+        multiline={ rows === 0 ? false : true }
+        rows={rows}
+        />
     </Box>
     </div>
   );

@@ -115,22 +115,22 @@ const CreateAndUpdateSection = (props)=>{
      setOpen(false)
      setEvent(null)
 
-
     }
-
-    
 
     return (
       <div>
+        {isLoading && <CircularIndeterminate />}
         <InputComponent label="Member count" value={memberCount} setValue={setMemberCount} />
         <InputComponent label="Budget" value={budget} setValue={setBudget} />
-        <InputComponent label="Description" value={departureDate} setValue={setDepartureDate} />
         <InputComponent label="Departure Date" value={duration} setValue={setDuration} />
         <InputComponent label="Description" value={description} setValue={setDescription} />
-        <InputComponent label="Latitude" value={latitude} setValue={setLatitude} />
-        <InputComponent label="Longitude" value={longitude} setValue={setLongitude} />
+        <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
+        <InputComponent type="number" label="Longitude" value={longitude} setValue={setLongitude} />
         <ImageUpload url={url} setUrl={setUrl1} name="Select Image 1" />
         <ImageUpload url={url2} setUrl={setUrl2} name="Select Image 2" />
+
+        <InputComponent rows={5} label="Description" value={departureDate} setValue={setDepartureDate} />
+
 
         <SpaceBoxComponent>
           { !isLoading && event && <Button color="secondary" onClick={deleteHotel}>   Delete User </Button>}
@@ -152,7 +152,7 @@ const ListSection = (props)=>{
 
     return (
       <div style={{display:'flex', width:'100%', justifyContent:'flex-start', gap:'1rem', flexWrap:'wrap'}}>
-        { events.map((hotel, index)=> <CardComponent editHandler={editHandler} key={hotel.id} {...hotel} />
+        { events.map((event, index)=> <CardComponent editHandler={editHandler} key={event.id} {...event} />
          ) }
       </div>
     )
