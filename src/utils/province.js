@@ -7,5 +7,5 @@ export const provinceList = [
         "Southern",
         "Uva",
         "Sabaragamuwa",
-        "Wester",
+        "Western",
 ]
