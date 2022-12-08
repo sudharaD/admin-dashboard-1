@@ -38,7 +38,7 @@ const VehicleList = () => {
 
     useEffect(()=>{
       if(search){
-        const searchedVehicles = allVehicles.filter(vehicle=> vehicle?.vehicleName?.toLowerCase().includes(search.toLowerCase()))
+        const searchedVehicles = allVehicles.filter(vehicle=> vehicle?.name?.toLowerCase().includes(search.toLowerCase()))
         setVehicles(()=>[...searchedVehicles])
       }else{
         setVehicles(allVehicles)
@@ -79,7 +79,7 @@ const VehicleList = () => {
 const CreateAndUpdateSection = (props)=>{
   const {  setVehicle, setOpen,  vehicle, dataUpdateToggle, setDataUpdateToggle} = props
 
-    const [vehicleName, setVehicleName] = useState("")
+    const [name, setVehicleName] = useState("")
     const [address, setAddress] = useState("")
     const [dis, setDescription] = useState("")
     const [province, setProvice] = useState("")
@@ -87,9 +87,9 @@ const CreateAndUpdateSection = (props)=>{
     const [district, setDistrict] = useState("")
     const [nearestTown, setNearestTown] = useState("")
     const [email, setEmail] = useState("")
-    const [phoneNumber, setPhoneNumber] = useState("")
-    const [vehicleCategory, setVehicleCategory] = useState("")
-    const [numberOfSeats, setNumberOfSeats] = useState("")
+    const [phone, setPhoneNumber] = useState("")
+    const [category, setVehicleCategory] = useState("")
+    const [seats, setNumberOfSeats] = useState("")
     const [lat, setLatitude] = useState("")
     const [lng, setLongitude] = useState("")
     const [pic, setUrl1] = useState("")
@@ -98,8 +98,8 @@ const CreateAndUpdateSection = (props)=>{
 
     useEffect(()=>{
       if(vehicle){
-        const { hotelName, dis, city, province, nearestTown, email, phoneNumber , district, address, vehicleCategory, numberOfSeats, lat, lng, pic, pic1 } = vehicle
-        setVehicleName(hotelName)
+        const { name, dis, city, province, nearestTown, email, phone , district, address, category, seats, lat, lng, pic, pic1 } = vehicle
+        setVehicleName(name)
         setDescription(dis)
         setAddress(address)
         setProvice(province)
@@ -107,9 +107,9 @@ const CreateAndUpdateSection = (props)=>{
         setDistrict(district)
         setNearestTown(nearestTown)
         setEmail(email)
-        setPhoneNumber(phoneNumber)
-        setNumberOfSeats(numberOfSeats)
-        setVehicleCategory(vehicleCategory)
+        setPhoneNumber(phone)
+        setNumberOfSeats(seats)
+        setVehicleCategory(category)
         setLatitude(lat)
         setLongitude(lng)
         setUrl1(pic)
@@ -119,7 +119,7 @@ const CreateAndUpdateSection = (props)=>{
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = {  vehicleName, address, city, nearestTown, email, phoneNumber, dis, province, district, vehicleCategory, numberOfSeats,  lat, lng, pic, pic1 }
+      const doc = {  name, address, city, nearestTown, email, phone, dis, province, district, category, seats,  lat, lng, pic, pic1 }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
       if(!vehicle){
       await addData("vehicles", doc)
@@ -147,16 +147,16 @@ const CreateAndUpdateSection = (props)=>{
     return (
       <div>
         {isLoading && <CircularIndeterminate />}
-        <InputComponent label="Vehicle Name" value={vehicleName} setValue={setVehicleName} />
+        <InputComponent label="Vehicle Name" value={name} setValue={setVehicleName} />
         <InputComponent label="Vehicle Address" value={address} setValue={setAddress} />
         <DropDown label="Province" select={province} setSelect={setProvice} items={provinceList} />
         <DropDown label="District" select={district} setSelect={setDistrict} items={districtsList} />
         <InputComponent label="City" value={city} setValue={setCity} />
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent label="Email" value={email} setValue={setEmail} />
-        <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
-        <InputComponent label="Vehicle Category" value={vehicleCategory} setValue={setVehicleCategory} />
-        <InputComponent label="Number Of Seats" value={numberOfSeats} setValue={setNumberOfSeats} />
+        <InputComponent label="Phone Number" value={phone} setValue={setPhoneNumber} />
+        <InputComponent label="Vehicle Category" value={category} setValue={setVehicleCategory} />
+        <InputComponent label="Number Of Seats" value={seats} setValue={setNumberOfSeats} />
         <InputComponent type="number" label="Latitude" value={lat} setValue={setLatitude} />
         <InputComponent type="number" label="Longitude" value={lng} setValue={setLongitude} />
         <ImageUpload url={pic} setUrl={setUrl1} name="Select Image 1" />
@@ -185,7 +185,7 @@ const ListSection = (props)=>{
 
     return (
       <div style={{display:'flex', width:'100%', justifyContent:'flex-start', gap:'1rem', flexWrap:'wrap'}}>
-        { vehicles.map((vehicle, index)=> <CardComponent mainHeader={vehicle.vehicleName} editHandler={editHandler} key={vehicle.id} {...vehicle} />
+        { vehicles.map((vehicle, index)=> <CardComponent mainHeader={vehicle.name} editHandler={editHandler} key={vehicle.id} {...vehicle} />
          ) }
       </div>
     )

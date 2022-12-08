@@ -38,7 +38,7 @@ const TravelEquipment = () => {
 
     useEffect(()=>{
       if(search){
-        const searchedEquipments = allEquipments.filter(equ=> equ?.equipmentName?.toLowerCase().includes(search.toLowerCase()))
+        const searchedEquipments = allEquipments.filter(equ=> equ?.name?.toLowerCase().includes(search.toLowerCase()))
         setEquipments(()=>[...searchedEquipments])
       }else{
         setEquipments(allEquipments)
@@ -79,7 +79,7 @@ const TravelEquipment = () => {
 const CreateAndUpdateSection = (props)=>{
   const { setEquipment, setOpen, equipment, dataUpdateToggle, setDataUpdateToggle} = props
 
-    const [equipmentName, setEquipmentName] = useState("")
+    const [name, setEquipmentName] = useState("")
     const [address, setAddress] = useState("")
     const [dis, setDescription] = useState("")
     const [province, setProvice] = useState("")
@@ -87,7 +87,7 @@ const CreateAndUpdateSection = (props)=>{
     const [district, setDistrict] = useState("")
     const [nearestTown, setNearestTown] = useState("")
     const [email, setEmail] = useState("")
-    const [phoneNumber, setPhoneNumber] = useState("")
+    const [phone, setPhoneNumber] = useState("")
     const [lat, setLatitude] = useState("")
     const [lng, setLongitude] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -96,8 +96,8 @@ const CreateAndUpdateSection = (props)=>{
 
     useEffect(()=>{
       if(equipment){
-        const { equipmentName, dis, city, province, nearestTown, email, phoneNumber , district, address, lat, lng, pic, pic1 } = equipment
-        setEquipmentName(equipmentName)
+        const { name, dis, city, province, nearestTown, email, phone , district, address, lat, lng, pic, pic1 } = equipment
+        setEquipmentName(name)
         setDescription(dis)
         setAddress(address)
         setProvice(province)
@@ -105,7 +105,7 @@ const CreateAndUpdateSection = (props)=>{
         setDistrict(district)
         setNearestTown(nearestTown)
         setEmail(email)
-        setPhoneNumber(phoneNumber)
+        setPhoneNumber(phone)
         setLatitude(lat)
         setLongitude(lng)
         setUrl1(pic)
@@ -115,7 +115,7 @@ const CreateAndUpdateSection = (props)=>{
 
     const addOrUpdateEquipmentShop = async()=>{
       setIsLoading(true)
-      const doc = { equipmentName, dis, city, province, nearestTown, email, phoneNumber , district, address,  lat, lng, url: pic, url2: pic1 }
+      const doc = { name, dis, city, province, nearestTown, email, phone , district, address,  lat, lng,  pic,  pic1 }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!equipment){
@@ -145,14 +145,14 @@ const CreateAndUpdateSection = (props)=>{
     return (
       <div>
         {isLoading && <CircularIndeterminate /> }
-        <InputComponent label="Equipment Name" value={equipmentName} setValue={setEquipmentName} />
+        <InputComponent label="Equipment Name" value={name} setValue={setEquipmentName} />
         <InputComponent label="Address" value={address} setValue={setAddress} />
         <DropDown label="Province" select={province} setSelect={setProvice} items={provinceList} />
         <DropDown label="District" select={district} setSelect={setDistrict} items={districtsList} />
         <InputComponent label="City" value={city} setValue={setCity} />
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent label="Email" value={email} setValue={setEmail} />
-        <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
+        <InputComponent label="Phone Number" value={phone} setValue={setPhoneNumber} />
         <InputComponent type="number" label="Latitude" value={lat} setValue={setLatitude} />
         <InputComponent type="number" label="Longitude" value={lng} setValue={setLongitude} />
         <ImageUpload url={pic} setUrl={setUrl1} name="Select Image 1" />
@@ -181,7 +181,7 @@ const ListSection = (props)=>{
 
     return (
       <div style={{display:'flex', width:'100%', justifyContent:'flex-start', gap:'1rem', flexWrap:'wrap'}}>
-        { equipments.map((equipment, index)=> <CardComponent mainHeader={equipment.equipmentName} editHandler={editHandler} key={equipment.id} {...equipment} />
+        { equipments.map((equipment, index)=> <CardComponent mainHeader={equipment.name} editHandler={editHandler} key={equipment.id} {...equipment} />
          ) }
       </div>
     )
