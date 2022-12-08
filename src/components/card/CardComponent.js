@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 export default function CardComponent(props) {
 
-  const { description, id, editHandler, pic, mainHeader} = props
+  const { dis, id, editHandler, pic, mainHeader} = props
 
   return (
     <Card onClick={()=>editHandler(id)}  sx={{ display: 'flex' ,  width: '350px', height: '11rem' , cursor:'pointer'}}>
@@ -17,7 +17,7 @@ export default function CardComponent(props) {
             {mainHeader}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
-            { description}
+            { dis}
           </Typography>
         </CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
