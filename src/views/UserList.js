@@ -35,7 +35,7 @@ const UserList = () => {
 
     useEffect(()=>{
       if(search){
-        const searchedUsers = allUsers.filter(user=> user?.title?.toLowerCase().includes(search.toLowerCase()))
+        const searchedUsers = allUsers.filter(user=> user?.name?.toLowerCase().includes(search.toLowerCase()))
         setUsers(()=>[...searchedUsers])
       }else{
         setUsers(allUsers)
@@ -79,7 +79,7 @@ const UserList = () => {
 const CreateAndUpdateSection = (props)=>{
   const {setUser, setOpen, user, dataUpdateToggle, setDataUpdateToggle} = props
 
-    const [title, setTitle] = useState("")
+    const [name, setTitle] = useState("")
     const [dis, setDescription] = useState("")
     const [province, setProvice] = useState("")
     const [city, setCity] = useState("")
@@ -93,8 +93,8 @@ const CreateAndUpdateSection = (props)=>{
     useEffect(()=>{
       if(user){
         
-        const { title, dis, city, district, nearestTown, lat, lng, pic, province} = user
-        setTitle(title)
+        const { name, dis, city, district, nearestTown, lat, lng, pic, province} = user
+        setTitle(name)
         setDescription(dis)
         setCity(city)
         setDistrict(district)
@@ -108,7 +108,7 @@ const CreateAndUpdateSection = (props)=>{
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = { title, dis, city, district, lat, lng, nearestTown, pic, province }
+      const doc = { name, dis, city, district, lat, lng, nearestTown, pic, province }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!user){
@@ -142,7 +142,7 @@ const CreateAndUpdateSection = (props)=>{
 
        { isLoading && <CircularIndeterminate />}
 
-        <InputComponent label="Title" value={title} setValue={setTitle} />
+        <InputComponent label="Title" value={name} setValue={setTitle} />
         <DropDown label="Province" select={province} setSelect={setProvice} items={provinceList} />
         <DropDown label="District" select={district} setSelect={setDistrict} items={districtsList} />
 
@@ -170,7 +170,7 @@ const ListSection = (props)=>{
 
     return (
       <div style={{display:'flex', width:'100%', justifyContent:'flex-start', gap:'1rem', flexWrap:'wrap'}}>
-        { users.map((user, index)=> <CardComponent mainHeader={user.title} editHandler={editHandler} key={user.id} {...user} />
+        { users.map((user, index)=> <CardComponent mainHeader={user.name} editHandler={editHandler} key={user.id} {...user} />
          ) }
       </div>
     )
