@@ -38,7 +38,7 @@ const HotelManagement = () => {
 
     useEffect(()=>{
       if(search){
-        const searchedHotels = allHotels.filter(hotel=> hotel?.hotelName?.toLowerCase().includes(search.toLowerCase()))
+        const searchedHotels = allHotels.filter(hotel=> hotel?.name?.toLowerCase().includes(search.toLowerCase()))
         setHotels(()=>[...searchedHotels])
       }else{
         setHotels(allHotels)
@@ -79,7 +79,7 @@ const HotelManagement = () => {
 const CreateAndUpdateSection = (props)=>{
   const { setHotel, setOpen, hotel, dataUpdateToggle, setDataUpdateToggle} = props
 
-    const [hotelName, setHotelName] = useState("")
+    const [name, setname] = useState("")
     const [address, setAddress] = useState("")
     const [dis, setDescription] = useState("")
     const [province, setProvice] = useState("")
@@ -87,7 +87,7 @@ const CreateAndUpdateSection = (props)=>{
     const [district, setDistrict] = useState("")
     const [nearestTown, setNearestTown] = useState("")
     const [email, setEmail] = useState("")
-    const [phoneNumber, setPhoneNumber] = useState("")
+    const [phone, setPhoneNumber] = useState("")
     const [lat, setLatitude] = useState("")
     const [lng, setLongitude] = useState("")
     const [pic, setUrl1] = useState("")
@@ -97,8 +97,8 @@ const CreateAndUpdateSection = (props)=>{
 
     useEffect(()=>{
       if(hotel){
-        const { hotelName, dis, city, province, nearestTown, email, phoneNumber , district, address, lat, lng, pic, pic1 } = hotel
-        setHotelName(hotelName)
+        const { name, dis, city, province, nearestTown, email, phone , district, address, lat, lng, pic, pic1 } = hotel
+        setname(name)
         setDescription(dis)
         setAddress(address)
         setProvice(province)
@@ -106,7 +106,7 @@ const CreateAndUpdateSection = (props)=>{
         setDistrict(district)
         setNearestTown(nearestTown)
         setEmail(email)
-        setPhoneNumber(phoneNumber)
+        setPhoneNumber(phone)
         setLatitude(lat)
         setLongitude(lng)
         setUrl1(pic)
@@ -116,7 +116,7 @@ const CreateAndUpdateSection = (props)=>{
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = { hotelName, address, city, nearestTown, email, phoneNumber, dis, province, district,  lat, lng, pic, pic1 }
+      const doc = { name, address, city, nearestTown, email, phone, dis, province, district,  lat, lng, pic, pic1 }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!hotel){
@@ -147,14 +147,14 @@ const CreateAndUpdateSection = (props)=>{
     return (
       <div>
         {isLoading && <CircularIndeterminate />}
-        <InputComponent label="Hotel Name" value={hotelName} setValue={setHotelName} />
+        <InputComponent label="Hotel Name" value={name} setValue={setname} />
         <InputComponent label="Hotel Address" value={address} setValue={setAddress} />
         <DropDown label="Province" select={province} setSelect={setProvice} items={provinceList} />
         <DropDown label="District" select={district} setSelect={setDistrict} items={districtsList} />
         <InputComponent label="City" value={city} setValue={setCity} />
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent label="Email" value={email} setValue={setEmail} />
-        <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
+        <InputComponent label="Phone Number" value={phone} setValue={setPhoneNumber} />
         <InputComponent type="number" label="Latitude" value={lat} setValue={setLatitude} />
         <InputComponent type="number" label="Longitude" value={lng} setValue={setLongitude} />
         <ImageUpload url={pic} setUrl={setUrl1} name="Select Image 1" />
@@ -183,7 +183,7 @@ const ListSection = (props)=>{
 
     return (
       <div style={{display:'flex', width:'100%', justifyContent:'flex-start', gap:'1rem', flexWrap:'wrap'}}>
-        { hotels.map((hotel, index)=> <CardComponent mainHeader={hotel.hotelName} editHandler={editHandler} key={hotel.id} {...hotel} />
+        { hotels.map((hotel, index)=> <CardComponent mainHeader={hotel.name} editHandler={editHandler} key={hotel.id} {...hotel} />
          ) }
       </div>
     )
