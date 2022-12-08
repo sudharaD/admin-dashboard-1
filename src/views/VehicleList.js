@@ -81,7 +81,7 @@ const CreateAndUpdateSection = (props)=>{
 
     const [vehicleName, setVehicleName] = useState("")
     const [address, setAddress] = useState("")
-    const [description, setDescription] = useState("")
+    const [dis, setDescription] = useState("")
     const [province, setProvice] = useState("")
     const [city, setCity] = useState("")
     const [district, setDistrict] = useState("")
@@ -90,17 +90,17 @@ const CreateAndUpdateSection = (props)=>{
     const [phoneNumber, setPhoneNumber] = useState("")
     const [vehicleCategory, setVehicleCategory] = useState("")
     const [numberOfSeats, setNumberOfSeats] = useState("")
-    const [latitude, setLatitude] = useState("")
-    const [longitude, setLongitude] = useState("")
+    const [lat, setLatitude] = useState("")
+    const [lng, setLongitude] = useState("")
     const [pic, setUrl1] = useState("")
     const [pic1, setUrl2] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(()=>{
       if(vehicle){
-        const { hotelName, description, city, province, nearestTown, email, phoneNumber , district, address, vehicleCategory, numberOfSeats, latitude, longitude, pic, pic1 } = vehicle
+        const { hotelName, dis, city, province, nearestTown, email, phoneNumber , district, address, vehicleCategory, numberOfSeats, lat, lng, pic, pic1 } = vehicle
         setVehicleName(hotelName)
-        setDescription(description)
+        setDescription(dis)
         setAddress(address)
         setProvice(province)
         setCity(city)
@@ -110,8 +110,8 @@ const CreateAndUpdateSection = (props)=>{
         setPhoneNumber(phoneNumber)
         setNumberOfSeats(numberOfSeats)
         setVehicleCategory(vehicleCategory)
-        setLatitude(latitude)
-        setLongitude(longitude)
+        setLatitude(lat)
+        setLongitude(lng)
         setUrl1(pic)
         setUrl2(pic1)
       }
@@ -119,7 +119,7 @@ const CreateAndUpdateSection = (props)=>{
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = {  vehicleName, address, city, nearestTown, email, phoneNumber, description, province, district, vehicleCategory, numberOfSeats,  latitude, longitude, pic, pic1 }
+      const doc = {  vehicleName, address, city, nearestTown, email, phoneNumber, dis, province, district, vehicleCategory, numberOfSeats,  lat, lng, pic, pic1 }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
       if(!vehicle){
       await addData("vehicles", doc)
@@ -157,12 +157,12 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
         <InputComponent label="Vehicle Category" value={vehicleCategory} setValue={setVehicleCategory} />
         <InputComponent label="Number Of Seats" value={numberOfSeats} setValue={setNumberOfSeats} />
-        <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
-        <InputComponent type="number" label="Longitude" value={longitude} setValue={setLongitude} />
+        <InputComponent type="number" label="Latitude" value={lat} setValue={setLatitude} />
+        <InputComponent type="number" label="Longitude" value={lng} setValue={setLongitude} />
         <ImageUpload url={pic} setUrl={setUrl1} name="Select Image 1" />
         <ImageUpload url={pic1} setUrl={setUrl2} name="Select Image 2" />
 
-        <InputComponent rows={5} label="Description" value={description} setValue={setDescription} />
+        <InputComponent rows={5} label="Description" value={dis} setValue={setDescription} />
 
 
         <SpaceBoxComponent>
