@@ -80,35 +80,35 @@ const CreateAndUpdateSection = (props)=>{
   const {setUser, setOpen, user, dataUpdateToggle, setDataUpdateToggle} = props
 
     const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
+    const [dis, setDescription] = useState("")
     const [province, setProvice] = useState("")
     const [city, setCity] = useState("")
     const [district, setDistrict] = useState("")
     const [nearestTown, setNearestTown] = useState("")
-    const [latitude, setLatitude] = useState("")
-    const [longitude, setLongitude] = useState("")
+    const [lat, setLatitude] = useState("")
+    const [lng, setLongitude] = useState("")
     const [pic, setUrl] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(()=>{
       if(user){
         
-        const { title, description, city, district, nearestTown, latitude, longitude, pic, province} = user
+        const { title, dis, city, district, nearestTown, lat, lng, pic, province} = user
         setTitle(title)
-        setDescription(description)
+        setDescription(dis)
         setCity(city)
         setDistrict(district)
         setNearestTown(nearestTown)
         setProvice(province)
-        setLatitude(latitude)
-        setLongitude(longitude)
+        setLatitude(lat)
+        setLongitude(lng)
         setUrl(pic)
       }
     }, [user])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = { title, description, city, district, latitude, longitude, nearestTown, pic, province }
+      const doc = { title, dis, city, district, lat, lng, nearestTown, pic, province }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!user){
@@ -148,10 +148,10 @@ const CreateAndUpdateSection = (props)=>{
 
         <InputComponent label="City" value={city} setValue={setCity} />
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
-        <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
-        <InputComponent type="number" label="Longitude" value={longitude} setValue={setLongitude} />
+        <InputComponent type="number" label="Latitude" value={lat} setValue={setLatitude} />
+        <InputComponent type="number" label="Longitude" value={lng} setValue={setLongitude} />
         <ImageUpload url={pic} setUrl={setUrl} />
-        <InputComponent label="Description" value={description} setValue={setDescription} rows={5}/>
+        <InputComponent label="Description" value={dis} setValue={setDescription} rows={5}/>
 
         <SpaceBoxComponent>
           { !isLoading && user && <Button variant="contained" color="error" onClick={deleteUser}>   Delete User </Button>}

@@ -81,24 +81,24 @@ const CreateAndUpdateSection = (props)=>{
 
     const [equipmentName, setEquipmentName] = useState("")
     const [address, setAddress] = useState("")
-    const [description, setDescription] = useState("")
+    const [dis, setDescription] = useState("")
     const [province, setProvice] = useState("")
     const [city, setCity] = useState("")
     const [district, setDistrict] = useState("")
     const [nearestTown, setNearestTown] = useState("")
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
-    const [latitude, setLatitude] = useState("")
-    const [longitude, setLongitude] = useState("")
+    const [lat, setLatitude] = useState("")
+    const [lng, setLongitude] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [pic, setUrl1] = useState("")
     const [pic1, setUrl2] = useState("")
 
     useEffect(()=>{
       if(equipment){
-        const { equipmentName, description, city, province, nearestTown, email, phoneNumber , district, address, latitude, longitude, pic, pic1 } = equipment
+        const { equipmentName, dis, city, province, nearestTown, email, phoneNumber , district, address, lat, lng, pic, pic1 } = equipment
         setEquipmentName(equipmentName)
-        setDescription(description)
+        setDescription(dis)
         setAddress(address)
         setProvice(province)
         setCity(city)
@@ -106,8 +106,8 @@ const CreateAndUpdateSection = (props)=>{
         setNearestTown(nearestTown)
         setEmail(email)
         setPhoneNumber(phoneNumber)
-        setLatitude(latitude)
-        setLongitude(longitude)
+        setLatitude(lat)
+        setLongitude(lng)
         setUrl1(pic)
         setUrl2(pic1)
       }
@@ -115,7 +115,7 @@ const CreateAndUpdateSection = (props)=>{
 
     const addOrUpdateEquipmentShop = async()=>{
       setIsLoading(true)
-      const doc = { equipmentName, description, city, province, nearestTown, email, phoneNumber , district, address,  latitude, longitude, url: pic, url2: pic1 }
+      const doc = { equipmentName, dis, city, province, nearestTown, email, phoneNumber , district, address,  lat, lng, url: pic, url2: pic1 }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!equipment){
@@ -153,12 +153,12 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent label="Email" value={email} setValue={setEmail} />
         <InputComponent label="Phone Number" value={phoneNumber} setValue={setPhoneNumber} />
-        <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
-        <InputComponent type="number" label="Longitude" value={longitude} setValue={setLongitude} />
+        <InputComponent type="number" label="Latitude" value={lat} setValue={setLatitude} />
+        <InputComponent type="number" label="Longitude" value={lng} setValue={setLongitude} />
         <ImageUpload url={pic} setUrl={setUrl1} name="Select Image 1" />
         <ImageUpload url={pic1} setUrl={setUrl2} name="Select Image 2" />
 
-        <InputComponent rows={5} label="Description" value={description} setValue={setDescription} />
+        <InputComponent rows={5} label="Description" value={dis} setValue={setDescription} />
 
 
          <SpaceBoxComponent>

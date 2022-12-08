@@ -35,7 +35,7 @@ const EventManagement = () => {
 
     useEffect(()=>{
       if(search){
-        const searchedUsers = allEvents.filter(user=> user?.description?.toLowerCase().includes(search.toLowerCase()))
+        const searchedUsers = allEvents.filter(user=> user?.dis?.toLowerCase().includes(search.toLowerCase()))
         setEvents(()=>[...searchedUsers])
       }else{
         setEvents(allEvents)
@@ -80,24 +80,24 @@ const CreateAndUpdateSection = (props)=>{
     const [budget, setBudget] = useState("")
     const [departureDate, setDepartureDate] = useState("")
     const [duration, setDuration] = useState("")
-    const [description, setDescription] = useState("")
-    const [latitude, setLatitude] = useState("")
-    const [longitude, setLongitude] = useState("")
+    const [dis, setDescription] = useState("")
+    const [lat, setLatitude] = useState("")
+    const [lng, setLongitude] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [pic, setUrl1] = useState("")
     const [pic1, setUrl2] = useState("")
 
     useEffect(()=>{
       if(event){
-        const { memberCount, description, duration, budget,departureDate, latitude, longitude, pic, pic1 } = event
+        const { memberCount, dis, duration, budget,departureDate, lat, lng, pic, pic1 } = event
         
         setMemberCount(memberCount)
         setDepartureDate(departureDate)
         setBudget(budget)
         setDuration(duration)
-        setDescription(description)
-        setLatitude(latitude)
-        setLongitude(longitude)
+        setDescription(dis)
+        setLatitude(lat)
+        setLongitude(lng)
         setUrl1(pic)
         setUrl2(pic1)
       }
@@ -105,7 +105,7 @@ const CreateAndUpdateSection = (props)=>{
 
     const addOrUpdateEvent = async()=>{
       setIsLoading(true)
-      const doc = {  memberCount, budget,  description,  departureDate, duration,  latitude, longitude, pic, pic1 }
+      const doc = {  memberCount, budget,  dis,  departureDate, duration,  lat, lng, pic, pic1 }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!event){
@@ -138,12 +138,12 @@ const CreateAndUpdateSection = (props)=>{
         <InputComponent label="Member count" value={memberCount} setValue={setMemberCount} />
         <InputComponent label="Budget" value={budget} setValue={setBudget} />
         <InputComponent label="Departure Date" value={duration} setValue={setDuration} />
-        <InputComponent type="number" label="Latitude" value={latitude} setValue={setLatitude} />
-        <InputComponent type="number" label="Longitude" value={longitude} setValue={setLongitude} />
+        <InputComponent type="number" label="Latitude" value={lat} setValue={setLatitude} />
+        <InputComponent type="number" label="Longitude" value={lng} setValue={setLongitude} />
         <ImageUpload url={pic} setUrl={setUrl1} name="Select Image 1" />
         <ImageUpload url={pic1} setUrl={setUrl2} name="Select Image 2" />
 
-        <InputComponent rows={5} label="Description" value={description} setValue={setDescription} />
+        <InputComponent rows={5} label="Description" value={dis} setValue={setDescription} />
 
 
         <SpaceBoxComponent>
