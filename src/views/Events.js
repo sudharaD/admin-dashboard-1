@@ -76,28 +76,32 @@ const EventManagement = () => {
 const CreateAndUpdateSection = (props)=>{
   const { setEvent, setOpen, event, dataUpdateToggle, setDataUpdateToggle} = props
 
-    const [memberCount, setMemberCount] = useState("")
+    const [m_count, setMemberCount] = useState("")
     const [budget, setBudget] = useState("")
     const [departureDate, setDepartureDate] = useState("")
     const [duration, setDuration] = useState("")
     const [dis, setDescription] = useState("")
     const [lat, setLatitude] = useState("")
     const [lng, setLongitude] = useState("")
+    const [lat1, setLatitude1] = useState("")
+    const [lng1, setLongitude1] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [pic, setUrl1] = useState("")
     const [pic1, setUrl2] = useState("")
 
     useEffect(()=>{
       if(event){
-        const { memberCount, dis, duration, budget,departureDate, lat, lng, pic, pic1 } = event
+        const { m_count, dis, duration, budget,departureDate, lat, lat1, lng1, lng, pic, pic1 } = event
         
-        setMemberCount(memberCount)
+        setMemberCount(m_count)
         setDepartureDate(departureDate)
         setBudget(budget)
         setDuration(duration)
         setDescription(dis)
         setLatitude(lat)
         setLongitude(lng)
+        setLatitude1(lat1)
+        setLongitude1(lng1)
         setUrl1(pic)
         setUrl2(pic1)
       }
@@ -105,7 +109,7 @@ const CreateAndUpdateSection = (props)=>{
 
     const addOrUpdateEvent = async()=>{
       setIsLoading(true)
-      const doc = {  memberCount, budget,  dis,  departureDate, duration,  lat, lng, pic, pic1 }
+      const doc = {  m_count, budget,  dis,  departureDate, duration,  lat, lng,lat1, lng1, pic, pic1 }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!event){
@@ -135,11 +139,13 @@ const CreateAndUpdateSection = (props)=>{
     return (
       <div>
         {isLoading && <CircularIndeterminate />}
-        <InputComponent label="Member count" value={memberCount} setValue={setMemberCount} />
+        <InputComponent label="Member count" value={m_count} setValue={setMemberCount} />
         <InputComponent label="Budget" value={budget} setValue={setBudget} />
         <InputComponent label="Departure Date" value={duration} setValue={setDuration} />
-        <InputComponent type="number" label="Latitude" value={lat} setValue={setLatitude} />
-        <InputComponent type="number" label="Longitude" value={lng} setValue={setLongitude} />
+        <InputComponent type="number" label="Start Latitude" value={lat} setValue={setLatitude} />
+        <InputComponent type="number" label="Start Longitude" value={lng} setValue={setLongitude} />
+        <InputComponent type="number" label="Destination Latitude" value={lat1} setValue={setLatitude1} />
+        <InputComponent type="number" label="Destination Longitude" value={lng1} setValue={setLongitude1} />
         <ImageUpload url={pic} setUrl={setUrl1} name="Select Image 1" />
         <ImageUpload url={pic1} setUrl={setUrl2} name="Select Image 2" />
 
