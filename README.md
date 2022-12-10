@@ -1,3 +1,1 @@
-### Just click the login then you can login from google account
-
-#### check need auth
+#### Just click the login and then you can login to the google account
