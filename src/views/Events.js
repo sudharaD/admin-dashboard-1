@@ -35,7 +35,7 @@ const EventManagement = () => {
 
     useEffect(()=>{
       if(search){
-        const searchedUsers = allEvents.filter(user=> user?.dis?.toLowerCase().includes(search.toLowerCase()))
+        const searchedUsers = allEvents.filter(user=> user?.de?.toLowerCase().includes(search.toLowerCase()))
         setEvents(()=>[...searchedUsers])
       }else{
         setEvents(allEvents)
@@ -80,7 +80,7 @@ const CreateAndUpdateSection = (props)=>{
     const [budget, setBudget] = useState("")
     const [departureDate, setDepartureDate] = useState("")
     const [duration, setDuration] = useState("")
-    const [dis, setDescription] = useState("")
+    const [de, setDescription] = useState("")
     const [lat, setLatitude] = useState("")
     const [lng, setLongitude] = useState("")
     const [lat1, setLatitude1] = useState("")
@@ -91,13 +91,13 @@ const CreateAndUpdateSection = (props)=>{
 
     useEffect(()=>{
       if(event){
-        const { m_count, dis, duration, budget,departureDate, lat, lat1, lng1, lng, pic, pic1 } = event
+        const { m_count, de, duration, budget,departureDate, lat, lat1, lng1, lng, pic, pic1 } = event
         
         setMemberCount(m_count)
         setDepartureDate(departureDate)
         setBudget(budget)
         setDuration(duration)
-        setDescription(dis)
+        setDescription(de)
         setLatitude(lat)
         setLongitude(lng)
         setLatitude1(lat1)
@@ -109,7 +109,7 @@ const CreateAndUpdateSection = (props)=>{
 
     const addOrUpdateEvent = async()=>{
       setIsLoading(true)
-      const doc = {  m_count, budget,  dis,  departureDate, duration,  lat, lng,lat1, lng1, pic, pic1 }
+      const doc = {  m_count, budget,  de,  departureDate, duration,  lat, lng,lat1, lng1, pic, pic1 }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!event){
@@ -149,7 +149,7 @@ const CreateAndUpdateSection = (props)=>{
         <ImageUpload url={pic} setUrl={setUrl1} name="Select Image 1" />
         <ImageUpload url={pic1} setUrl={setUrl2} name="Select Image 2" />
 
-        <InputComponent rows={5} label="Description" value={dis} setValue={setDescription} />
+        <InputComponent rows={5} label="Description" value={de} setValue={setDescription} />
 
 
         <SpaceBoxComponent>
