@@ -141,7 +141,7 @@ const CreateAndUpdateSection = (props)=>{
         {isLoading && <CircularIndeterminate />}
         <InputComponent label="Member count" value={m_count} setValue={setMemberCount} />
         <InputComponent label="Budget" value={budget} setValue={setBudget} />
-        <InputComponent label="Departure Date" value={duration} setValue={setDuration} />
+        <InputComponent label="Departure Date" type="date" value={duration} setValue={setDuration} />
         <InputComponent type="number" label="Start Latitude" value={lat} setValue={setLatitude} />
         <InputComponent type="number" label="Start Longitude" value={lng} setValue={setLongitude} />
         <InputComponent type="number" label="Destination Latitude" value={lat1} setValue={setLatitude1} />
