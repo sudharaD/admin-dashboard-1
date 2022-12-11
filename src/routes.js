@@ -1,6 +1,7 @@
 
 import Dashboard from "views/Dashboard.js";
 import UserProfile from "views/UserList";
+import ScreenList from "views/ScreenList";
 import VehicleList from "views/VehicleList";
 import Event from "./views/Events";
 import TravelEquipment from "./views/TravelEquipment";
@@ -10,17 +11,17 @@ const dashboardRoutes = [
   
   
   {
-    path: "/main",
-    name: "Main Screen Management",
+    path: "/user",
+    name: "User Management",
     icon: "nc-icon nc-circle-09",
     component: UserProfile,
     layout: "/admin",
   },
   {
-    path: "/user",
-    name: "User Management",
+    path: "/main",
+    name: "Main Screen Management",
     icon: "nc-icon nc-circle-09",
-    component: UserProfile,
+    component: ScreenList,
     layout: "/admin",
   },
   {
