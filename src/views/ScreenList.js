@@ -3,6 +3,8 @@ import {getAllData, addData, updateData, deleteData} from '../http/api-requests'
 
 import {  Container } from "react-bootstrap";
 import Button from '@mui/material/Button';
+import {provinceList} from '../utils/province'
+import {districtsList} from '../utils/districts'
 import InputComponent from 'components/InputComponent/InputComponent';
 import SpaceBoxComponent from 'components/SpaceBox/SpaceBox';
 import ModalComponent from 'components/modal/Modal';
@@ -10,10 +12,9 @@ import CardComponent from 'components/card/CardComponent';
 import CircularIndeterminate from 'components/progress/CircularIndeterminate';
 import ImageUpload from 'components/fileUpload/FileUpload';
 import SearchComponent from 'components/search/SearchComponent';
-import Switch from '@mui/material/Switch';
+import DropDown from 'components/dropdown/DropDown';
 
-
-const UserList = () => {
+const ScreenList = () => {
     
     const [users, setUsers] = useState([])
     const [allUsers, setAllUsers] = useState([])
@@ -44,11 +45,10 @@ const UserList = () => {
 
     const getUserData = async()=>{
       setIsLoading(true)
-      const response = await getAllData("users")
+      const response = await getAllData("main")
       setIsLoading(false)
       const {success, data} = response
       if(success){
-        console.log(data);
         setUsers(data)
         setAllUsers(data)
       }
@@ -65,7 +65,7 @@ const UserList = () => {
       {/* search  */}
       <SearchComponent search={search} setSearch={setSearch} />
       {/* new users */}
-      <ModalComponent setItem={setUser} open={open} setOpen={setOpen} name="Add New User">
+      <ModalComponent setItem={setUser} open={open} setOpen={setOpen} name="Add New Screen">
         <CreateAndUpdateSection dataUpdateToggle={dataUpdateToggle} setDataUpdateToggle={setDataUpdateToggle} user={user} setOpen={setOpen} setUser={setUser} />
       </ModalComponent>
 
@@ -80,39 +80,41 @@ const CreateAndUpdateSection = (props)=>{
   const {setUser, setOpen, user, dataUpdateToggle, setDataUpdateToggle} = props
 
     const [name, setTitle] = useState("")
-    const [bio, setDescription] = useState("")
-    const [userId, setUserId] = useState("")
-    const [age, setAge] = useState("")
+    const [dis, setDescription] = useState("")
+    const [province, setProvice] = useState("")
+    const [city, setCity] = useState("")
+    const [district, setDistrict] = useState("")
+    const [nearestTown, setNearestTown] = useState("")
     const [lat, setLatitude] = useState("")
     const [lng, setLongitude] = useState("")
     const [pic, setUrl] = useState("")
-    const [isAdmin, setIsAdmin] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(()=>{
       if(user){
         
-        const { name, bio, id, age, lat, lng, pic, admin} = user
+        const { name, dis, city, district, nearestTown, lat, lng, pic, province} = user
         setTitle(name)
-        setDescription(bio)
-        setUserId(id)
-        setAge(age)
+        setDescription(dis)
+        setCity(city)
+        setDistrict(district)
+        setNearestTown(nearestTown)
+        setProvice(province)
         setLatitude(lat)
         setLongitude(lng)
         setUrl(pic)
-        setIsAdmin(admin)
       }
     }, [user])
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = { name, bio, userId, lat, lng, age, pic, admin : isAdmin }
+      const doc = { name, dis, city, district, lat, lng, nearestTown, pic, province }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!user){
-      await addData("users", doc)
+      await addData("main", doc)
       }else{
-        await updateData('users', user.id, doc)
+        await updateData('main', user.id, doc)
       }
       setIsLoading(false)
       setDataUpdateToggle(!dataUpdateToggle)
@@ -124,7 +126,7 @@ const CreateAndUpdateSection = (props)=>{
     const deleteUser = async()=>{
       if(user){
         setIsLoading(true)
-        await deleteData('users', user.id)
+        await deleteData('main', user.id)
         setIsLoading(false)
         setDataUpdateToggle(!dataUpdateToggle)
      }
@@ -132,23 +134,24 @@ const CreateAndUpdateSection = (props)=>{
      setUser("")
     }
 
-    console.log(isAdmin);
+    console.log(province, district);
+
 
     return (
       <div>
 
        { isLoading && <CircularIndeterminate />}
-      { user && <InputComponent disabled={true} label="User Id" value={userId} setValue={setUserId} />}
 
-        <InputComponent label="Name" value={name} setValue={setTitle} />
+        <InputComponent label="Title" value={name} setValue={setTitle} />
+        <DropDown label="Province" select={province} setSelect={setProvice} items={provinceList} />
+        <DropDown label="District" select={district} setSelect={setDistrict} items={districtsList} />
 
-        <InputComponent type="number" label="Age" value={age} setValue={setAge} />
+        <InputComponent label="City" value={city} setValue={setCity} />
+        <InputComponent label="Nearest Town" value={nearestTown} setValue={setNearestTown} />
         <InputComponent type="number" label="Latitude" value={lat} setValue={setLatitude} />
         <InputComponent type="number" label="Longitude" value={lng} setValue={setLongitude} />
         <ImageUpload url={pic} setUrl={setUrl} />
-        <InputComponent label="Bio" value={bio} setValue={setDescription} rows={5}/>
-        <label> Set As Admin </label>
-        <Switch  checked={isAdmin} onChange={(e)=>setIsAdmin(e.target.checked)} />
+        <InputComponent label="Description" value={dis} setValue={setDescription} rows={5}/>
 
         <SpaceBoxComponent>
           { !isLoading && user && <Button variant="contained" color="error" onClick={deleteUser}>   Delete User </Button>}
@@ -173,4 +176,4 @@ const ListSection = (props)=>{
     )
 }
 
-export default UserList
+export default ScreenList

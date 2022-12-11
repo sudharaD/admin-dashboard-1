@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 export default function BasicTextFields(props) {
-  const {rows = 0, label, value, setValue, type = "text"} = props
+  const {rows = 0, label, value, setValue, type = "text", disabled = false} = props
 
   return (
     <div style={{width:'100%', margin : '1rem 0'}}>
@@ -27,6 +27,7 @@ export default function BasicTextFields(props) {
         variant="outlined"
         multiline={ rows === 0 ? false : true }
         rows={rows}
+        disabled={disabled}
         />
     </Box>
     </div>
