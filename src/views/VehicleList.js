@@ -47,7 +47,7 @@ const VehicleList = () => {
 
     const getVehicleData = async()=>{
       setIsLoading(true)
-      const response = await getAllData("vehicles")
+      const response = await getAllData("vehicles1")
       setIsLoading(false)
       const {success, data} = response
       if(success){
@@ -119,12 +119,12 @@ const CreateAndUpdateSection = (props)=>{
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = {  name, address, city, nearestTown, email, phone, dis, province, district, category, seats,  lat, lng, pic, pic1 }
+      const doc = {  name, address, city, nearestTown, email, phone, dis, province, district, category, seats,  lat, lng, pic, pic1, userid : '7xTBfgs3JNh6d8RYSdHMnL0CO1J3' }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
       if(!vehicle){
-      await addData("vehicles", doc)
+      await addData("vehicles1", doc)
       }else{
-        await updateData('vehicles', vehicle.id, doc)
+        await updateData('vehicles1', vehicle.id, doc)
       }
       setIsLoading(false)
       setDataUpdateToggle(!dataUpdateToggle)
@@ -136,7 +136,7 @@ const CreateAndUpdateSection = (props)=>{
     const deleteHotel = async()=>{
       if(vehicle){
         setIsLoading(true)
-        await deleteData('vehicles', vehicle.id)
+        await deleteData('vehicles1', vehicle.id)
         setIsLoading(false)
         setDataUpdateToggle(!dataUpdateToggle)
      }

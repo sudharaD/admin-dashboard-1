@@ -47,7 +47,7 @@ const TravelEquipment = () => {
 
     const getEquipmentData = async()=>{
       setIsLoading(true)
-      const response = await getAllData("equipments")
+      const response = await getAllData("equipments1")
       setIsLoading(false)
       const {success, data} = response
       if(success){
@@ -115,13 +115,13 @@ const CreateAndUpdateSection = (props)=>{
 
     const addOrUpdateEquipmentShop = async()=>{
       setIsLoading(true)
-      const doc = { name, dis, city, province, nearestTown, email, phone , district, address,  lat, lng,  pic,  pic1 }
+      const doc = { name, dis, city, province, nearestTown, email, phone , district, address,  lat, lng,  pic,  pic1, userid : '7xTBfgs3JNh6d8RYSdHMnL0CO1J3' }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!equipment){
-      await addData("equipments", doc)
+      await addData("equipments1", doc)
       }else{
-        await updateData('equipments', equipment.id, doc)
+        await updateData('equipments1', equipment.id, doc)
       }
       setIsLoading(false)
       setDataUpdateToggle(!dataUpdateToggle)
@@ -133,7 +133,7 @@ const CreateAndUpdateSection = (props)=>{
     const deleteEqipment = async()=>{
       if(equipment){
         setIsLoading(true)
-        await deleteData('equipments', equipment.id)
+        await deleteData('equipments1', equipment.id)
         setIsLoading(false)
         setDataUpdateToggle(!dataUpdateToggle)
      }

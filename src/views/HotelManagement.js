@@ -47,7 +47,7 @@ const HotelManagement = () => {
 
     const getHotelData = async()=>{
       setIsLoading(true)
-      const response = await getAllData("hotels")
+      const response = await getAllData("hotels1")
       setIsLoading(false)
       const {success, data} = response
       if(success){
@@ -116,13 +116,13 @@ const CreateAndUpdateSection = (props)=>{
 
     const addOrUpdateUser = async()=>{
       setIsLoading(true)
-      const doc = { name, address, city, nearestTown, email, phone, dis, province, district,  lat, lng, pic, pic1 }
+      const doc = { name, address, city, nearestTown, email, phone, dis, province, district,  lat, lng, pic, pic1, userid : '7xTBfgs3JNh6d8RYSdHMnL0CO1J3' }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!hotel){
-      await addData("hotels", doc)
+      await addData("hotels1", doc)
       }else{
-        await updateData('hotels', hotel.id, doc)
+        await updateData('hotels1', hotel.id, doc)
       }
       setIsLoading(false)
       setDataUpdateToggle(!dataUpdateToggle)
@@ -134,7 +134,7 @@ const CreateAndUpdateSection = (props)=>{
     const deleteHotel = async()=>{
       if(hotel){
         setIsLoading(true)
-        await deleteData('hotels', hotel.id)
+        await deleteData('hotels1', hotel.id)
         setIsLoading(false)
         setDataUpdateToggle(!dataUpdateToggle)
      }
