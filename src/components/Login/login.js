@@ -7,7 +7,8 @@ const LoginComponent = () => {
 
   const [user, setUser] = useState()
   const [email, setemail] = useState("")
-  const [password, setPassword] = useState("")
+  const [isUserCodeCorrect, setUserCodeCorrect] = useState(false)
+  const [code, setCode] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const history = useHistory()
 
@@ -40,26 +41,14 @@ const LoginComponent = () => {
     }
   };
 
-  
-
-  const login = async()=>{
-    history.push('/admin/main')
-    return;
-
-    // add default login
-    localStorage.setItem("car-admin-user", "default_login")
-    history.push('/admin/user')
-    return;
-
-    setIsLoading(true)
-    const request = await httpRequest({url:'admin/login', method:'post', data : {email,password}})
-    setIsLoading(false)
-
-    if(request.success){
-      localStorage.setItem("car-admin-user", request.data)
-      history.push('/admin/user')
+  const userCodeHandler = ()=>{
+    if(code === "333222"){
+      setUserCodeCorrect(true)
     }
   }
+  
+
+  
   return (
     <div className='bgC'>
     <div style={{height:'200px'}}></div>
@@ -76,18 +65,26 @@ const LoginComponent = () => {
 		<p>Travel App System. System for change the future in the travel management Sri Lanka</p>
 		
         <div className="inputs">
-			<input type="text" placeholder="user name" value={email} onChange={(e)=>setemail(e.target.value)} />
+			{/* <input type="text" placeholder="user name" value={email} onChange={(e)=>setemail(e.target.value)} />
 			<br />
-			<input type="password" placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)} />
+			<input type="password" placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)} /> */}
 		</div>
 
         <div className="remember-me--forget-password">
 	
 		</div>
 
-        <div style={{height:'50px'}}></div>
+    <div style={{height:'50px'}}></div>
 
-        <button onClick={handleAuth} style={{width:'100%'}}>{isLoading ? "Please wait ..." : "Login"}</button>
+    { !isUserCodeCorrect && <div>
+      <input type="password" placeholder="ADMIN CODE" value={code} onChange={(e)=>setCode(e.target.value)} />
+      <div style={{height:'50px'}}></div>
+      <button onClick={userCodeHandler} style={{width:'100%'}}> CONTINUE </button>
+    </div>}
+    
+
+        <div style={{height:'50px'}}></div>
+         { isUserCodeCorrect &&  <button onClick={handleAuth} style={{width:'100%'}}>{isLoading ? "Please wait ..." : "Login"}</button>}
         </div>
 	</div> 
     </div>
