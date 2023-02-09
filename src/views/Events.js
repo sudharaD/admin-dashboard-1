@@ -35,7 +35,7 @@ const EventManagement = () => {
 
     useEffect(()=>{
       if(search){
-        const searchedUsers = allEvents.filter(user=> user?.de?.toLowerCase().includes(search.toLowerCase()))
+        const searchedUsers = allEvents.filter(user=> user?.des?.toLowerCase().includes(search.toLowerCase()))
         setEvents(()=>[...searchedUsers])
       }else{
         setEvents(allEvents)
@@ -78,9 +78,9 @@ const CreateAndUpdateSection = (props)=>{
 
     const [m_count, setMemberCount] = useState("")
     const [budget, setBudget] = useState("")
-    const [departureDate, setDepartureDate] = useState("")
+    const [date, setDepartureDate] = useState("")
     const [duration, setDuration] = useState("")
-    const [de, setDescription] = useState("")
+    const [des, setDescription] = useState("")
     const [lat, setLatitude] = useState("")
     const [lng, setLongitude] = useState("")
     const [lat1, setLatitude1] = useState("")
@@ -91,25 +91,27 @@ const CreateAndUpdateSection = (props)=>{
 
     useEffect(()=>{
       if(event){
-        const { m_count, de, duration, budget,departureDate, lat, lat1, lng1, lng, pic, pic1 } = event
+        const { m_count, des, duration, budget,date, lat, lat1, lng1, lng, pic, pic1 } = event
         
         setMemberCount(m_count)
-        setDepartureDate(departureDate)
+        setDepartureDate(date)
         setBudget(budget)
         setDuration(duration)
-        setDescription(de)
+        setDescription(des)
         setLatitude(lat)
         setLongitude(lng)
         setLatitude1(lat1)
         setLongitude1(lng1)
         setUrl1(pic)
         setUrl2(pic1)
+        setDuration(duration)
       }
     }, [event])
 
     const addOrUpdateEvent = async()=>{
       setIsLoading(true)
-      const doc = {  m_count, budget,  de,  departureDate, duration,  lat, lng,lat1, lng1, pic, pic1 }
+      const userid = "7xTBfgs3JNh6d8RYSdHMnL0CO1J3"
+      const doc = {  m_count, budget,  des, date, duration,  lat, lng,lat1, lng1, pic, pic1, userid }
       Object.keys(doc).forEach((k) => doc[k] == null && delete doc[k]);
 
       if(!event){
@@ -141,15 +143,16 @@ const CreateAndUpdateSection = (props)=>{
         {isLoading && <CircularIndeterminate />}
         <InputComponent label="Member count" value={m_count} setValue={setMemberCount} />
         <InputComponent label="Budget" value={budget} setValue={setBudget} />
-        <InputComponent label="Departure Date" type="date" value={duration} setValue={setDuration} />
+        <InputComponent label="Departure Date" type="date" value={date} setValue={setDepartureDate} />
         <InputComponent type="number" label="Start Latitude" value={lat} setValue={setLatitude} />
         <InputComponent type="number" label="Start Longitude" value={lng} setValue={setLongitude} />
         <InputComponent type="number" label="Destination Latitude" value={lat1} setValue={setLatitude1} />
         <InputComponent type="number" label="Destination Longitude" value={lng1} setValue={setLongitude1} />
+        <InputComponent label="Duration" value={duration} setValue={setDuration} />
         <ImageUpload url={pic} setUrl={setUrl1} name="Select Image 1" />
         <ImageUpload url={pic1} setUrl={setUrl2} name="Select Image 2" />
 
-        <InputComponent rows={5} label="Description" value={de} setValue={setDescription} />
+        <InputComponent rows={5} label="Description" value={des} setValue={setDescription} />
 
 
         <SpaceBoxComponent>
